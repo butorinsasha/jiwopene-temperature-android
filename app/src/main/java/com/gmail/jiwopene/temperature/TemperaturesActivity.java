@@ -150,6 +150,7 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
 
     public void onResume() {
         super.onResume();
+        rebuildSensorList();
         refreshValuesIterationHandler.postDelayed(refreshValuesIteration, 0);
     }
 
