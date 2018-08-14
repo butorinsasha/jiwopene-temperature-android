@@ -1,0 +1,51 @@
+<!--
+  ~ temperature-android
+  ~ Copyright (C) 2018  jiwopene
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  ~ jiwopene@gmail.com
+  ~ https://gitlab.com/jiwopene/temperature-android
+  -->
+
+<resources>
+    <string name="app_name">Temp. monitor</string>
+
+    <string name="refresh_sensors">Refresh sensor list</string>
+    <string name="no_sensors">No sensors found. Try refreshing sensor list and check if you have not set all sensors to \"Hidden\" state.</string>
+    <string name="unknown_sensor">Unknown</string>
+    <string name="no_description">No description</string>
+    <string name="no_temperature" translatable="false">\??</string>
+    <string name="sensor_not_found">Sensor not found.</string>
+    <string name="activity_sensor_details">Sensor details</string>
+    <string name="update_interval">Update interval</string>
+    <string name="update_interval_fast" >Fast</string>
+    <string name="update_interval_ultra_fast">Ultra Fast</string>
+    <string name="update_interval_normal">Normal</string>
+    <string name="update_interval_slow">Slow</string>
+    <string name="update_interval_custom">Custom</string>
+    <string name="set_interval">Set custom interval</string>
+    <string name="seconds">sec</string>
+    <string name="interval_out_of_range">Interval must be between 0.1 and 10 seconds</string>
+    <string name="interval_change_can_take_while">Interval change can take a while.</string>
+    <string name="update_interval_status_fmt">Interval: %.3f s</string>
+    <string name="edit_description">Edit description</string>
+    <string name="delete_description">Delete description</string>
+    <string name="show_sensor_uri">Show URI</string>
+    <string name="sensor_uri">Sensor URI</string>
+    <string name="copied">Copied</string>
+    <string name="placeholder_name">Name</string>
+    <string name="placeholder_description">Description</string>
+    <string name="placeholder_temperature" translatable="false">T</string>
+</resources>
