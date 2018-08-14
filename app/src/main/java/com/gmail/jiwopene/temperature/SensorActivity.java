@@ -199,7 +199,7 @@ public class SensorActivity extends AppCompatActivity {
             case R.id.is_hidden:
                 storage.setSensorHidden(sensor.getIdentifier(), !storage.isSensorHidden(sensor.getIdentifier()));
                 invalidateOptionsMenu();
-                break;
+                return true;
             case R.id.show_uri:
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.sensor_uri)
@@ -218,6 +218,7 @@ public class SensorActivity extends AppCompatActivity {
                         })
                         .setMessage(sensor.getIdentifier().toString())
                         .show();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
