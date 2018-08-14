@@ -51,4 +51,5 @@
     <string name="show_hidden_sensors">Show hidden sensors</string>
     <string name="hidden_flag">HIDDEN</string>
     <string name="sensor_is_hidden">Hidden</string>
+    <string name="resfresh_sensor_alert">Refreshing sensor list will show all hidden sensors.\nDo you want to proceed?</string>
 </resources>

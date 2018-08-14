@@ -21,6 +21,8 @@
 
 package com.gmail.jiwopene.temperature;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.AsyncTask;
@@ -96,8 +98,21 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
 
         switch (item.getItemId()) {
             case R.id.refresh_sensors:
-                RefreshTask task = new RefreshTask(sensorStorage, this);
-                task.execute();
+                new AlertDialog.Builder(this)
+                        .setTitle(android.R.string.dialog_alert_title)
+                        .setMessage(R.string.resfresh_sensor_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                RefreshTask task = new RefreshTask(sensorStorage, TemperaturesActivity.this);
+                                task.execute();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {}
+                        })
+                        .show();
                 return true;
             case R.id.show_hidden:
                 globalPreferences.setShowHidden(!globalPreferences.getShowHidden());
