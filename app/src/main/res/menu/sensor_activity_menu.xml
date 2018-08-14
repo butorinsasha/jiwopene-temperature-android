@@ -28,6 +28,12 @@
         android:title="@string/edit_description"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/is_hidden"
+        android:title="@string/sensor_is_hidden"
+        android:checkable="true"
+        app:showAsAction="never"
+        />
+    <item
         android:id="@+id/show_uri"
         android:checkable="false"
         android:enabled="true"

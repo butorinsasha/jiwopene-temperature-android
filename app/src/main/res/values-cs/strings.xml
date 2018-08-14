@@ -46,4 +46,7 @@
     <string name="copied">Zkopírováno</string>
     <string name="placeholder_name">Název</string>
     <string name="placeholder_description">Popis</string>
+    <string name="show_hidden_sensors">Zobrazit skrytá čidla</string>
+    <string name="hidden_flag">SKRYTÝ</string>
+    <string name="sensor_is_hidden">Skrytý</string>
 </resources>

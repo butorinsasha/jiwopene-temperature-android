@@ -83,6 +83,9 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         intervalSubmenu.onPrepareOptionsMenu(menu);
+
+        menu.findItem(R.id.show_hidden).setChecked(globalPreferences.getShowHidden());
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -96,13 +99,18 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
                 RefreshTask task = new RefreshTask(sensorStorage, this);
                 task.execute();
                 return true;
+            case R.id.show_hidden:
+                globalPreferences.setShowHidden(!globalPreferences.getShowHidden());
+                invalidateOptionsMenu();
+                rebuildSensorList();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     protected void rebuildSensorList() {
-        sensorList.setAdapter(new SensorListAdapter(sensorStorage.getSensors(), sensorStorage));
+        sensorList.setAdapter(new SensorListAdapter(sensorStorage.getSensors(globalPreferences.getShowHidden()), sensorStorage));
         refreshValues();
     }
 
@@ -254,6 +262,12 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
                 ((TextView) (view.findViewById(R.id.temperature))).setText(String.format(Locale.getDefault(), "%.2f °C", sensors[i].value));
             else
                 ((TextView)(view.findViewById(R.id.temperature))).setText(R.string.no_temperature);
+            if (sensors[i].hidden) {
+                view.findViewById(R.id.hidden_flag).setVisibility(View.VISIBLE);
+            }
+            else {
+                view.findViewById(R.id.hidden_flag).setVisibility(View.GONE);
+            }
             return view;
         }
 
@@ -279,6 +293,7 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
             public String name;
             public String description;
             public Float value;
+            public Boolean hidden;
             public Sensor original;
             public SensorStorage storage;
 
@@ -296,6 +311,7 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
                 catch (Exception ignored) {
                     value = null;
                 }
+                hidden = storage.isSensorHidden(original.getIdentifier());
             }
         }
     }

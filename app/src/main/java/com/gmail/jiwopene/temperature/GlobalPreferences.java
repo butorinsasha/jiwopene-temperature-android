@@ -48,4 +48,11 @@ public class GlobalPreferences {
         editor.putInt("interval", interval);
         editor.apply();
     }
+
+    public boolean getShowHidden() { return preferences.getBoolean("show_hidden", false); }
+    public void setShowHidden(boolean showHidden) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("show_hidden", showHidden);
+        editor.apply();
+    }
 }

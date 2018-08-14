@@ -28,7 +28,7 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -37,8 +37,7 @@
         android:textSize="@dimen/sensor_name_font_size"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/temperature"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/hidden_flag"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -68,5 +67,23 @@
         android:textSize="@dimen/sensor_value_font_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/hidden_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/hidden_flag"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/sensor_name_font_size"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/description"
+        app:layout_constraintEnd_toStartOf="@+id/name"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

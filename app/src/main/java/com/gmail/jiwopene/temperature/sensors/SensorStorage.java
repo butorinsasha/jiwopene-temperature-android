@@ -48,11 +48,18 @@ public final class SensorStorage {
         prefs = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
     }
 
-    public Sensor[] getSensors() {
+    public Sensor[] getSensors(boolean includeHidden) {
         ArrayList<Sensor> out = new ArrayList<>();
 
         for (String sensor : prefs.getStringSet("sensors", new android.support.v4.util.ArraySet<String>())) {
             try {
+                if (sensor.startsWith("!")) { // Delete hidden flag from URI
+                    if (!includeHidden) {
+                        continue;
+                    }
+                    sensor = sensor.substring(1);
+                }
+
                 URI uri = new URI(sensor);
                 switch (uri.getScheme()) {
                     case "file":
@@ -103,6 +110,40 @@ public final class SensorStorage {
     public void clear() {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putStringSet("sensors", new ArraySet<String>());
+        editor.apply();
+    }
+
+    /**
+     * Checks if sensor is hidden
+     * @param uri Identifier of the sensor
+     * @return True if is the sensor found and hidden, otherwise false
+     */
+    public boolean isSensorHidden(@NonNull Uri uri) {
+        for (String record : prefs.getStringSet("sensors", new ArraySet<String>())) {
+            if (record.equals("!"+uri.toString()))
+                return true;
+        }
+        return false;
+    }
+
+    public void setSensorHidden(@NonNull Uri uri, boolean hidden) {
+        ArrayList<String> records = new ArrayList<>(prefs.getStringSet("sensors", new ArraySet<String>()));
+        for (int i = 0; i < records.size(); i++) {
+            String recordUri = records.get(i);
+            if (recordUri.startsWith("!"))
+                recordUri = recordUri.substring(1);
+            if (recordUri.equals(uri.toString())) {
+                if (hidden) {
+                    records.set(i, "!"+recordUri);
+                }
+                else {
+                    records.set(i, recordUri);
+                }
+            }
+        }
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putStringSet("sensors", new ArraySet<>(records));
         editor.apply();
     }
 

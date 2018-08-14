@@ -28,4 +28,9 @@
         android:icon="@android:drawable/ic_popup_sync"
         android:title="@string/refresh_sensors"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/show_hidden"
+        android:checkable="true"
+        android:title="@string/show_hidden_sensors"
+        />
 </menu>

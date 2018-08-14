@@ -64,9 +64,10 @@ public class SensorActivity extends AppCompatActivity {
         this.globalPreferences = new GlobalPreferences(this);
 
         storage = new SensorStorage(this);
-        for (Sensor sensor : storage.getSensors()) {
+        for (Sensor sensor : storage.getSensors(true)) {
             if (sensor.getIdentifier().toString().equals(getIntent().getStringExtra(EXTRA_SENSOR_URI))) {
                 this.sensor = sensor;
+                break;
             }
         }
 
@@ -154,6 +155,9 @@ public class SensorActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         intervalSubmenu.onPrepareOptionsMenu(menu);
+
+        menu.findItem(R.id.is_hidden).setChecked(storage.isSensorHidden(sensor.getIdentifier()));
+
         return true;
     }
 
@@ -191,6 +195,10 @@ public class SensorActivity extends AppCompatActivity {
                             }
                         })
                         .show();
+                return true;
+            case R.id.is_hidden:
+                storage.setSensorHidden(sensor.getIdentifier(), !storage.isSensorHidden(sensor.getIdentifier()));
+                invalidateOptionsMenu();
                 break;
             case R.id.show_uri:
                 new AlertDialog.Builder(this)

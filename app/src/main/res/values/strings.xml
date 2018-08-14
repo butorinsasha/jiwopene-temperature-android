@@ -48,4 +48,7 @@
     <string name="placeholder_name">Name</string>
     <string name="placeholder_description">Description</string>
     <string name="placeholder_temperature" translatable="false">T</string>
+    <string name="show_hidden_sensors">Show hidden sensors</string>
+    <string name="hidden_flag">HIDDEN</string>
+    <string name="sensor_is_hidden">Hidden</string>
 </resources>
