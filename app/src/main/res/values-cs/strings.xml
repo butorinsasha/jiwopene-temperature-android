@@ -49,7 +49,7 @@
     <string name="show_hidden_sensors">Zobrazit skrytá čidla</string>
     <string name="hidden_flag">SKRYTÝ</string>
     <string name="sensor_is_hidden">Skrytý</string>
-    <string name="resfresh_sensor_alert">Vyhledávání čidel zobrazí všechny skryté senzory.\nChcete pokračovat?</string>
+    <string name="refresh_sensor_alert">Vyhledávání čidel zobrazí všechny skryté senzory.\nChcete pokračovat?</string>
     <string name="activity_temperature_log_settings">Nastavení záznamu teplot</string>
     <string name="log_interval">Uložit teplotu každých</string>
     <string name="log_in_low_power">Zaznamenávat ve stavu se sníženou spotřebou</string>

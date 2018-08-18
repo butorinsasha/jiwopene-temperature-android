@@ -51,7 +51,7 @@
     <string name="show_hidden_sensors">Show hidden sensors</string>
     <string name="hidden_flag">HIDDEN</string>
     <string name="sensor_is_hidden">Hidden</string>
-    <string name="resfresh_sensor_alert">Refreshing sensor list will show all hidden sensors.\nDo you want to proceed?</string>
+    <string name="refresh_sensor_alert">Refreshing sensor list will show all hidden sensors.\nDo you want to proceed?</string>
     <string name="activity_temperature_log_settings">Log settings</string>
     <string name="log_interval">Log every</string>
     <string name="log_in_low_power">Log in low power state</string>

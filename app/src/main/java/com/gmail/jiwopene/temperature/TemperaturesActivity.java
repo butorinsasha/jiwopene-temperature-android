@@ -100,7 +100,7 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
             case R.id.refresh_sensors:
                 new AlertDialog.Builder(this)
                         .setTitle(android.R.string.dialog_alert_title)
-                        .setMessage(R.string.resfresh_sensor_alert)
+                        .setMessage(R.string.refresh_sensor_alert)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
