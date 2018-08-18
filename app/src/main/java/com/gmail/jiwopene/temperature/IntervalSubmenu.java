@@ -21,12 +21,12 @@
 
 package com.gmail.jiwopene.temperature;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
-import android.content.Context;
 import android.widget.Toast;
 
 import java.util.Locale;

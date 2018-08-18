@@ -21,24 +21,18 @@
 
 package com.gmail.jiwopene.temperature.sensors;
 
-import android.content.SharedPreferences;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArraySet;
 import android.util.Log;
 
-import java.io.File;
 import java.io.FileReader;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
 public final class SensorStorage {
     private static final String PREFERENCES = "sensors";

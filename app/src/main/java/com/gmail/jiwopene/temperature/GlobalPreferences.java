@@ -21,9 +21,8 @@
 
 package com.gmail.jiwopene.temperature;
 
-import android.content.ContextWrapper;
-import android.content.SharedPreferences;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 
 

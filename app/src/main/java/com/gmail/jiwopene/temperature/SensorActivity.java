@@ -22,16 +22,13 @@
 package com.gmail.jiwopene.temperature;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
-import android.drm.DrmStore;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -41,10 +38,7 @@ import android.widget.Toast;
 import com.gmail.jiwopene.temperature.sensors.Sensor;
 import com.gmail.jiwopene.temperature.sensors.SensorStorage;
 
-import org.w3c.dom.Text;
-
 import java.util.Locale;
-import java.util.Objects;
 
 public class SensorActivity extends AppCompatActivity {
 

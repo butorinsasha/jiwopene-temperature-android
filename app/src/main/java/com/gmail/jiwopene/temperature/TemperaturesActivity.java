@@ -37,14 +37,12 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gmail.jiwopene.temperature.sensors.Sensor;
 import com.gmail.jiwopene.temperature.sensors.SensorStorage;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Timer;
 
 public class TemperaturesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
