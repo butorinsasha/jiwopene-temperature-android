@@ -119,6 +119,9 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
                 invalidateOptionsMenu();
                 rebuildSensorList();
                 return true;
+            case R.id.log:
+                startActivity(new Intent(this, TemperatureLogActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

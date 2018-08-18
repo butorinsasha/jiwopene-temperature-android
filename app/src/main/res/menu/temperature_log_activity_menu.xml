@@ -24,19 +24,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/log"
-        app:showAsAction="always"
-        android:icon="@drawable/round_list_alt_white_24"
-        android:title="@string/show_log" />
+        android:id="@+id/refresh"
+        android:checkable="false"
+        android:icon="@drawable/round_refresh_white_24"
+        android:title="@string/refresh"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/find_by_date"
+        android:icon="@drawable/round_date_range_white_24"
+        android:title="@string/log_find_date"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/round_settings_white_24"
+        android:title="@string/log_settings"
+        app:showAsAction="always" />
 
-    <item
-        android:id="@+id/refresh_sensors"
-        android:icon="@android:drawable/ic_popup_sync"
-        android:title="@string/refresh_sensors"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/show_hidden"
-        android:checkable="true"
-        android:title="@string/show_hidden_sensors"
-        />
+
 </menu>

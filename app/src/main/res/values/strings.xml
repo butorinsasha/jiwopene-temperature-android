@@ -52,4 +52,22 @@
     <string name="hidden_flag">HIDDEN</string>
     <string name="sensor_is_hidden">Hidden</string>
     <string name="resfresh_sensor_alert">Refreshing sensor list will show all hidden sensors.\nDo you want to proceed?</string>
+    <string name="activity_temperature_log_settings">Log settings</string>
+    <string name="log_interval">Log every</string>
+    <string name="log_in_low_power">Log in low power state</string>
+    <string name="log_with_screen_off">Log wakes the device</string>
+    <string name="log_exact_timing">Exact timing</string>
+    <string name="warning_can_cause_battery_drain">Exact timing and logging in low power state can cause battery drain.</string>
+    <string name="enable_log">Enable logging</string>
+    <string name="log_settings">Log settings</string>
+    <string name="log_find_date">Find by date/time</string>
+    <string name="show_log">Show log</string>
+    <string name="find_by_date_add_time">Add time</string>
+    <string name="find">Find</string>
+    <string name="placeholder_time">Time</string>
+    <string name="refresh">Refresh</string>
+    <string name="new_log_data_available">New data are available. Refresh to show them.</string>
+    <string name="warning_can_cause_battery_drain_too_fast">If it the interval too low, waking of device can cause battery drain.</string>
+    <string name="log_when_locked">Log when device is locked</string>
+    <string name="cannot_find_in_empty_list">Search is not allowed in empty list.</string>
 </resources>

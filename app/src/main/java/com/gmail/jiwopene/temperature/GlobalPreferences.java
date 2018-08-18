@@ -24,6 +24,7 @@ package com.gmail.jiwopene.temperature;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.content.Context;
+import android.os.Build;
 
 
 public class GlobalPreferences {
@@ -53,6 +54,72 @@ public class GlobalPreferences {
     public void setShowHidden(boolean showHidden) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("show_hidden", showHidden);
+        editor.apply();
+    }
+
+    public boolean getLogEnabled() {
+        return preferences.getBoolean("log_enabled", false);
+    }
+    public void setLogEnabled(boolean enabled) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("log_enabled", enabled);
+        editor.apply();
+    }
+
+    public long getLogInterval() {
+        return preferences.getLong("log_interval", 500);
+    }
+    public void setLogInterval(int interval) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong("log_interval", interval);
+        editor.apply();
+    }
+
+    public boolean getExactLogTimingEnabled() {
+        if (!isExactLogTimingEnabledModifiable()) {
+            return true;
+        }
+        return preferences.getBoolean("log_exact", false);
+    }
+    public void setExactLogTimingEnabled(boolean exactLogTimingEnabled) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("log_exact", exactLogTimingEnabled);
+        editor.apply();
+    }
+    public boolean isExactLogTimingEnabledModifiable() {
+        return !(Build.VERSION.SDK_INT < Build.VERSION_CODES.M);
+    }
+
+    public boolean getLogEnabledInLowPowerState() {
+        if (!isLogEnabledInLowPowerStateModifiable()) {
+            return true;
+        }
+        return preferences.getBoolean("log_in_low_power", false);
+    }
+    public void setLogEnabledInLowPowerState(boolean logEnabledInLowPowerState) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("log_in_low_power", logEnabledInLowPowerState);
+        editor.apply();
+    }
+    public boolean isLogEnabledInLowPowerStateModifiable() {
+        return !(Build.VERSION.SDK_INT < Build.VERSION_CODES.M);
+    }
+
+    public boolean getLogWakesDevice() {
+        return preferences.getBoolean("log_wakes_device", false);
+    }
+    public void setLogWakesDevice(boolean logWakes) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("log_wakes_device", logWakes);
+        editor.apply();
+    }
+
+    public boolean getLogWhenLocked() {
+        return preferences.getBoolean("log_when_locked", true);
+    }
+    public void setLogWhenLocked(boolean logWhenLocked) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("log_when_locked", logWhenLocked);
         editor.apply();
     }
 }

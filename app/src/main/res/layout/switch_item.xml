@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ temperature-android
   ~ Copyright (C) 2018  jiwopene
@@ -20,23 +19,14 @@
   ~ https://gitlab.com/jiwopene/temperature-android
   -->
 
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <item
-        android:id="@+id/log"
-        app:showAsAction="always"
-        android:icon="@drawable/round_list_alt_white_24"
-        android:title="@string/show_log" />
-
-    <item
-        android:id="@+id/refresh_sensors"
-        android:icon="@android:drawable/ic_popup_sync"
-        android:title="@string/refresh_sensors"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/show_hidden"
-        android:checkable="true"
-        android:title="@string/show_hidden_sensors"
-        />
-</menu>
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+</RelativeLayout>

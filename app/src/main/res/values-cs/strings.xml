@@ -50,4 +50,21 @@
     <string name="hidden_flag">SKRYTÝ</string>
     <string name="sensor_is_hidden">Skrytý</string>
     <string name="resfresh_sensor_alert">Vyhledávání čidel zobrazí všechny skryté senzory.\nChcete pokračovat?</string>
+    <string name="activity_temperature_log_settings">Nastavení záznamu teplot</string>
+    <string name="log_interval">Uložit teplotu každých</string>
+    <string name="log_in_low_power">Zaznamenávat ve stavu se sníženou spotřebou</string>
+    <string name="log_with_screen_off">Probudit zařízení kvůli zaznamenávání</string>
+    <string name="log_exact_timing">Přesné časování</string>
+    <string name="warning_can_cause_battery_drain">Přesné časování a zaznamenávání ve stavu se sníženou spotřebou může znatelně urychlit vybíjení baterie.</string>
+    <string name="enable_log">Zapnout zaznamenávání</string>
+    <string name="log_settings">Nastavení zaznamenávání</string>
+    <string name="log_find_date">Hledat podle data/času</string>
+    <string name="show_log">Zobrazit záznam</string>
+    <string name="find_by_date_add_time">Určit čas</string>
+    <string name="find">Vyhledat</string>
+    <string name="placeholder_time">Čas</string>
+    <string name="refresh">Obnovit</string>
+    <string name="new_log_data_available">Jsou dostupná nová data. Obnovte seznam pro zobrazení.</string>
+    <string name="warning_can_cause_battery_drain_too_fast">Když je interval příliš malý, probouzení může urychlit vybíjení baterie.</string>
+    <string name="log_when_locked">Zaznamenávat když je zařízení uzamčeno</string>
 </resources>
