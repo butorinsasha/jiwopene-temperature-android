@@ -70,4 +70,12 @@
     <string name="warning_can_cause_battery_drain_too_fast">If it the interval too low, waking of device can cause battery drain.</string>
     <string name="log_when_locked">Log when device is locked</string>
     <string name="cannot_find_in_empty_list">Search is not allowed in empty list.</string>
+    <string name="log_delete">Delete log</string>
+    <string name="log_delete_only_this_sensor">Only for this sensor</string>
+    <string name="log_delete_all_sensors">For all sensors</string>
+    <string name="log_delete_really_title">Do you really want to delete log?</string>
+    <string name="log_delete_really_message_all">Do you really want to delete log for ALL sensors?</string>
+    <string name="log_delete_really_message_this">Do you really want to delete log for THE SELECTED sensor?</string>
+    <string name="canceled">Canceled</string>
+    <string name="log_delete_really_countdown">Log will be deleted in %d s.</string>
 </resources>

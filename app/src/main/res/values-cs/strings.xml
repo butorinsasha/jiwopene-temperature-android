@@ -67,4 +67,12 @@
     <string name="new_log_data_available">Jsou dostupná nová data. Obnovte seznam pro zobrazení.</string>
     <string name="warning_can_cause_battery_drain_too_fast">Když je interval příliš malý, probouzení může urychlit vybíjení baterie.</string>
     <string name="log_when_locked">Zaznamenávat když je zařízení uzamčeno</string>
+    <string name="log_delete">Vymazat záznam</string>
+    <string name="log_delete_only_this_sensor">Pouze pro zvolený senzor</string>
+    <string name="log_delete_all_sensors">Všechny senzory</string>
+    <string name="log_delete_really_title">Opravdu chcete vymazat záznam?</string>
+    <string name="log_delete_really_message_all">Opravdu chcete vymazat záznam ze VŠECH senzorů?</string>
+    <string name="log_delete_really_message_this">Opravdu chcete vymazat záznam ze ZVOLENÉHO senzoru?</string>
+    <string name="canceled">Zrušeno</string>
+    <string name="log_delete_really_countdown">Záznam bude vymazán za %d s.</string>
 </resources>

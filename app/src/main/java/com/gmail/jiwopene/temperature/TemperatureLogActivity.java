@@ -37,9 +37,11 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -201,9 +203,63 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
             case R.id.refresh:
                 refreshList();
                 return true;
+            case R.id.delete_all:
+                showDeleteLogDialog(null);
+                return true;
+            case R.id.delete_only_this:
+                showDeleteLogDialog(selectedSensorIdentifier);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void showDeleteLogDialog(final Uri sensor) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.log_delete_really_title)
+                .setMessage(sensor == null ? R.string.log_delete_really_message_all :
+                    R.string.log_delete_really_message_this)
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(TemperatureLogActivity.this, R.string.canceled, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialogInterface, int i) {
+                        final AlertDialog countdownDialog = new AlertDialog(TemperatureLogActivity.this) {
+                        };
+                        countdownDialog.setTitle(R.string.log_delete_really_title);
+                        final TextView countdown = new TextView(TemperatureLogActivity.this);
+                        countdown.setText(String.format(Locale.getDefault(), getString(R.string.log_delete_really_countdown), 5));
+                        countdownDialog.setView(countdown);
+                        int padding = (int)(getResources().getDisplayMetrics().density * 16);
+                        countdown.setPadding(padding, padding, padding, padding);
+                        final CountDownTimer countDownTimer = new CountDownTimer(5000, 1000) {
+                            @Override
+                            public void onTick(long l) {
+                                countdown.setText(String.format(Locale.getDefault(), getString(R.string.log_delete_really_countdown), l / 1000 + 1));
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                new TemperatureLog(TemperatureLogActivity.this).deleteLog(sensor);
+                                countdownDialog.cancel();
+                                refreshList();
+                            }
+                        };
+                        countdownDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                countDownTimer.cancel();
+                            }
+                        });
+                        countdownDialog.show();
+                        countDownTimer.start();
+                    }
+                })
+                .show();
     }
 
     private void openFindByDateDialog() {

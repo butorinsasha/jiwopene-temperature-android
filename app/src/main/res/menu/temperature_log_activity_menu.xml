@@ -39,6 +39,18 @@
         android:icon="@drawable/round_settings_white_24"
         android:title="@string/log_settings"
         app:showAsAction="always" />
+    <item
+        android:title="@string/log_delete"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/delete_only_this"
+                android:title="@string/log_delete_only_this_sensor" />
+            <item
+                android:id="@+id/delete_all"
+                android:title="@string/log_delete_all_sensors" />
+        </menu>
+    </item>
 
 
 </menu>

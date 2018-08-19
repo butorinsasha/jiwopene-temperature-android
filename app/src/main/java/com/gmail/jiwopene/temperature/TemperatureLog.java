@@ -139,6 +139,15 @@ public class TemperatureLog {
         return out;
     }
 
+    public void deleteLog(@Nullable Uri sensor) {
+        if (sensor == null) {
+            database.delete(TABLE, null, null);
+        }
+        else {
+            database.delete(TABLE, COL_URI + " = ?", new String[]{ sensor.toString() });
+        }
+    }
+
     public static class Record {
         Date date;
         double temp;
