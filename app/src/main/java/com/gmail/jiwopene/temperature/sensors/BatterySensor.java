@@ -38,6 +38,8 @@ public class BatterySensor implements Sensor {
     @Override
     public float getValue() throws CannotReadSensorException {
         Intent intent = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        if (intent == null)
+            throw new CannotReadSensorException();
         int temperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -300);
         if (temperature == -300) {
             throw new CannotReadSensorException();
