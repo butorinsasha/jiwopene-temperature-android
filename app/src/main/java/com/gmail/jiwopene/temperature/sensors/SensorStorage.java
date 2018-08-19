@@ -37,8 +37,10 @@ import java.util.Locale;
 public final class SensorStorage {
     private static final String PREFERENCES = "sensors";
     private SharedPreferences prefs;
+    private Context context;
 
     public SensorStorage(Context context) {
+        this.context = context;
         prefs = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
     }
 
@@ -58,6 +60,14 @@ public final class SensorStorage {
                 switch (uri.getScheme()) {
                     case "file":
                         out.add(new SysfsSensor(uri.getPath()));
+                        break;
+                    case "android":
+                        switch (uri.getPath()) {
+                            case "/battery":
+                                out.add(new BatterySensor(context));
+                                break;
+                        }
+                        break;
                 }
             }
             catch (Exception ignored) {
@@ -166,6 +176,8 @@ public final class SensorStorage {
                 failed++;
             }
         }
+        // Battery sensor
+        sensors.add("android:///battery");
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putStringSet("sensors", new ArraySet<String>(sensors));
