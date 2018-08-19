@@ -75,4 +75,8 @@
     <string name="log_delete_really_message_this">Opravdu chcete vymazat záznam ze ZVOLENÉHO senzoru?</string>
     <string name="canceled">Zrušeno</string>
     <string name="log_delete_really_countdown">Záznam bude vymazán za %d s.</string>
+    <string name="log_export_csv">Exportovat jako CSV</string>
+    <string name="log_export_failed">Export selhal</string>
+    <string name="log_exported_to">Exportováno do fouboru %s. Cesta je zkopírována do schránky.</string>
+    <string name="log_export_share">Sdílet exportovaný soubor</string>
 </resources>

@@ -78,4 +78,8 @@
     <string name="log_delete_really_message_this">Do you really want to delete log for THE SELECTED sensor?</string>
     <string name="canceled">Canceled</string>
     <string name="log_delete_really_countdown">Log will be deleted in %d s.</string>
+    <string name="log_export_csv">Export as CSV</string>
+    <string name="log_export_failed">Export failed</string>
+    <string name="log_exported_to">Exported to file %s. Path is copied to clipboard.</string>
+    <string name="log_export_share">Share exported file</string>
 </resources>

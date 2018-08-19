@@ -51,6 +51,10 @@
                 android:title="@string/log_delete_all_sensors" />
         </menu>
     </item>
+    <item
+        android:id="@+id/export_csv"
+        android:title="@string/log_export_csv"
+        app:showAsAction="never" />
 
 
 </menu>

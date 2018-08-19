@@ -21,10 +21,13 @@
 
 package com.gmail.jiwopene.temperature;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,9 +41,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -62,6 +67,11 @@ import android.widget.Toast;
 import com.gmail.jiwopene.temperature.sensors.Sensor;
 import com.gmail.jiwopene.temperature.sensors.SensorStorage;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URLConnection;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -208,6 +218,38 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
                 return true;
             case R.id.delete_only_this:
                 showDeleteLogDialog(selectedSensorIdentifier);
+                return true;
+            case R.id.export_csv:
+                File directory;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "TemperatureLog");
+                }
+                else {
+                    directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "TemperatureLog");
+                }
+                File file = new File(String.format(Locale.ROOT, "%s/export-%d.csv", directory, new Date().getTime()));
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+
+                try {
+                    if (!directory.mkdirs())
+                        Log.e("Mkdirs", "Cannot create "+ directory.getPath());
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+                    bw.write(new TemperatureLog(this).getAsCSV(null));
+                    bw.close();
+                    ((ClipboardManager)getSystemService(CLIPBOARD_SERVICE)).setPrimaryClip(ClipData.newPlainText(file.getPath(), file.getAbsolutePath()));
+                    Toast.makeText(this, String.format(Locale.getDefault(), getString(R.string.log_exported_to), file.getPath()), Toast.LENGTH_LONG).show();
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                    shareIntent.setType(URLConnection.guessContentTypeFromName(file.getName()));
+                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    startActivity(Intent.createChooser(shareIntent, getString(R.string.log_export_share)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, R.string.log_export_failed, Toast.LENGTH_LONG).show();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

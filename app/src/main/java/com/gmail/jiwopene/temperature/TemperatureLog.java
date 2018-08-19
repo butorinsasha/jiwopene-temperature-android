@@ -31,8 +31,12 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -146,6 +150,75 @@ public class TemperatureLog {
         else {
             database.delete(TABLE, COL_URI + " = ?", new String[]{ sensor.toString() });
         }
+    }
+
+    public String getAsCSV(@Nullable Uri[] sensors) {
+        if (sensors == null) {
+            Cursor uris = database.query(TABLE, new String[]{COL_URI}, null, null, COL_URI, null, null);
+            uris.moveToFirst();
+            sensors = new Uri[uris.getCount()];
+            for (int i = 0; i < sensors.length; i++, uris.moveToNext())
+                sensors[i] = Uri.parse(uris.getString(0));
+            uris.close();
+        }
+
+        HashMap<Long, HashMap<String, Double>> records = new HashMap<>();
+
+        for (Uri sensor : sensors) {
+            Cursor sensorRecords = fetchAsCursor(null, null, null, sensor);
+            sensorRecords.moveToNext();
+
+            while (!sensorRecords.isAfterLast()) {
+                if (!records.containsKey(sensorRecords.getLong(1))) {
+                    HashMap<String, Double> newLine = new HashMap<>();
+                    for (Uri newLineSensor : sensors) {
+                        newLine.put(newLineSensor.toString(), null);
+                    }
+                    records.put(sensorRecords.getLong(1), newLine);
+                }
+
+                records.get(sensorRecords.getLong(1)).put(sensorRecords.getString(2), ((double)sensorRecords.getInt(0)) / 1000d);
+                sensorRecords.moveToNext();
+            }
+
+            sensorRecords.close();
+        }
+
+        StringBuffer csv = new StringBuffer();
+
+        // Write header
+        csv.append("\"TIME\",");
+        for (int i = 0; i < sensors.length; i++) {
+            csv.append("\"");
+            csv.append(sensors[i].toString().replace("\"", "\"\""));
+            csv.append("\"");
+            if (i < (sensors.length - 1))
+                csv.append(",");
+        }
+        csv.append("\n");
+
+        ArrayList<Long> sortedTime = new ArrayList<>(records.keySet());
+        Collections.sort(sortedTime);
+
+        for (Long time : sortedTime) {
+            csv.append("\"");
+            DateFormat dateFormat = new SimpleDateFormat("y-M-d H:m Z", Locale.ROOT);
+            csv.append(dateFormat.format(new Date(time)).replace("\"", "\"\""));
+            csv.append("\",");
+
+            for (int i = 0; i < sensors.length; i++) {
+                csv.append("\"");
+                Double temp = records.get(time).get(sensors[i].toString());
+                if (temp != null)
+                    csv.append(temp.toString());
+                csv.append("\"");
+                if (i < (sensors.length - 1))
+                    csv.append(",");
+            }
+            csv.append("\n");
+        }
+
+        return csv.toString();
     }
 
     public static class Record {
