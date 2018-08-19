@@ -55,8 +55,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -557,7 +557,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
         }
     }
 
-    private class LogAdapter implements ListAdapter {
+    private class LogAdapter extends BaseAdapter {
         Context context;
         TemperatureLog.Record[] data;
 
