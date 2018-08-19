@@ -130,8 +130,6 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
 
     boolean newDataAvailable = false;
     protected void setNewDataAvailable(boolean newDataAvailable) {
-        final ListView recordList = findViewById(R.id.records);
-
         if (this.newDataAvailable == newDataAvailable)
             return;
 
@@ -372,20 +370,6 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
         };
         final TimePickerDialog timePickerDialog = new TimePickerDialog(this, timeListener, selectedDate.get(Calendar.HOUR_OF_DAY), selectedDate.get(Calendar.MINUTE), true);
 
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i) {
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        dialogInterface.cancel();
-                        break;
-                    case DialogInterface.BUTTON_POSITIVE:
-                        //timePickerDialog.
-                        break;
-                }
-            }
-        };
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             timePickerDialog.create();
 
@@ -446,7 +430,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
         ((SensorSelectorAdapter)((Spinner)findViewById(R.id.sensor_selector)).getAdapter()).setSelected(i);
         findViewById(R.id.sensor_selector).invalidate();
 
-        Uri newSensorIdentifier = ((CachedSensorInfo)((SensorSelectorAdapter)((Spinner)findViewById(R.id.sensor_selector)).getAdapter()).getItem(i)).original.getIdentifier();
+        Uri newSensorIdentifier = ((CachedSensorInfo) ((Spinner)findViewById(R.id.sensor_selector)).getAdapter().getItem(i)).original.getIdentifier();
         if (selectedSensorIdentifier == null || !newSensorIdentifier.toString().equals(selectedSensorIdentifier.toString())) {
             selectedSensorIdentifier = newSensorIdentifier;
 
@@ -512,11 +496,11 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
         }
 
         @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
             return getView(position, convertView, parent);
         }
 
-        public void setSelected(int position) {
+        void setSelected(int position) {
             for (int i = 0; i < getCount(); i++) {
                 CachedSensorInfo item = (CachedSensorInfo)getItem(i);
                 if (item != null)
@@ -532,7 +516,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
         SensorStorage storage;
         boolean selected = false;
 
-        public void refresh() {
+        void refresh() {
             name = null;
             try {
                 name = original.getName();
@@ -558,10 +542,9 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
     }
 
     private class LogAdapter extends BaseAdapter {
-        Context context;
         TemperatureLog.Record[] data;
 
-        public LogAdapter(Context context, Uri identifier) {
+        LogAdapter(Context context, Uri identifier) {
             data = new TemperatureLog(context).fetch(null, null, null, identifier);
         }
 
