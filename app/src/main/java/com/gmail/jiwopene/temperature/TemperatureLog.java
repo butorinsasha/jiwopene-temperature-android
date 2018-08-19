@@ -39,10 +39,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
-/**
- * Created by Jiří on 15.08.2018.
- */
-
 public class TemperatureLog {
     public static final int CURRENT_VERSION = 1;
     private static final String TABLE = "log";
