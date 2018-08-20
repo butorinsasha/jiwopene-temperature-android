@@ -38,6 +38,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
         findViewById(R.id.show_gitlab).setOnClickListener(this);
         findViewById(R.id.submit_issue).setOnClickListener(this);
+        findViewById(R.id.open_material_icons).setOnClickListener(this);
     }
 
     @Override
@@ -48,6 +49,9 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.submit_issue:
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://gitlab.com/jiwopene/temperature-android/issues/new")));
+                break;
+            case R.id.open_material_icons:
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://material.io/tools/icons/")));
                 break;
         }
     }
