@@ -120,6 +120,9 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
             case R.id.log:
                 startActivity(new Intent(this, TemperatureLogActivity.class));
                 return true;
+            case R.id.about:
+                startActivity(new Intent(this, AboutActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

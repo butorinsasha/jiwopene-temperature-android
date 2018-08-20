@@ -80,4 +80,10 @@
     <string name="log_exported_to">Exportováno do fouboru %s. Cesta je zkopírována do schránky.</string>
     <string name="log_export_share">Sdílet exportovaný soubor</string>
     <string name="cannot_find_in_empty_list">Vyhledávání není v prázdném seznamu možné.</string>
+    <string name="about_screen_about_application_text">Tato aplikace zobrazuje teploty hardwaru zařízení. Upozornění: Kvůli rozdílům v hardwaru může na každém zařízení fungovat jinak.</string>
+    <string name="about_screen_about_application_title">O aplikaci</string>
+    <string name="about_screen_link_view_gitlab">Zobrazit na GitLabu</string>
+    <string name="about_screen_license_title">Licence (anglicky)</string>
+    <string name="about_app">O aplikaci</string>
+    <string name="about_screen_link_submit_issue">Nahlásit chybu (nebo navrhnout vylepšení)</string>
 </resources>

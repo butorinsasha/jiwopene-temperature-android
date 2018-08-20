@@ -39,4 +39,9 @@
         android:checkable="true"
         android:title="@string/show_hidden_sensors"
         />
+
+    <item
+        android:id="@+id/about"
+        android:title="@string/about_app"
+        />
 </menu>

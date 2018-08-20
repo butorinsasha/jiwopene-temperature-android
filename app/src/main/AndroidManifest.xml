@@ -53,6 +53,11 @@
 
         <activity android:name=".TemperatureLogSettingsActivity" android:parentActivityName=".TemperatureLogActivity" />
         <activity android:name=".TemperatureLogActivity" android:parentActivityName=".TemperaturesActivity" />
+
+        <activity
+            android:name=".AboutActivity"
+            android:parentActivityName=".TemperaturesActivity" />
+
         <receiver android:name=".OnBootTemperatureLogServiceStarter">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
