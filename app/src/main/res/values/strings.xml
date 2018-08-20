@@ -30,7 +30,7 @@
     <string name="sensor_not_found">Sensor not found.</string>
     <string name="activity_sensor_details">Sensor details</string>
     <string name="update_interval">Update interval</string>
-    <string name="update_interval_fast" >Fast</string>
+    <string name="update_interval_fast">Fast</string>
     <string name="update_interval_ultra_fast">Ultra Fast</string>
     <string name="update_interval_normal">Normal</string>
     <string name="update_interval_slow">Slow</string>
