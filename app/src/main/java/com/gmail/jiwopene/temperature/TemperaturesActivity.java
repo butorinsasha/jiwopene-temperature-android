@@ -60,11 +60,17 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
         sensorStorage = new SensorStorage(this);
         globalPreferences = new GlobalPreferences(this);
 
+        // Rescan sensors on first run
+        if (globalPreferences.isFirstRun())
+            sensorStorage.rescan();
+
         sensorList = findViewById(R.id.sensor_list);
 
         sensorList.setOnItemClickListener(this);
 
         rebuildSensorList();
+
+        globalPreferences.setFirstRun(false);
     }
 
     @Override

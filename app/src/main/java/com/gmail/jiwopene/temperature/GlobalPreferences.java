@@ -121,4 +121,13 @@ public class GlobalPreferences {
         editor.putBoolean("log_when_locked", logWhenLocked);
         editor.apply();
     }
+
+    public boolean isFirstRun() {
+        return preferences.getBoolean("first_run", true);
+    }
+    public void setFirstRun(boolean firstRun) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("first_run", firstRun);
+        editor.apply();
+    }
 }
