@@ -88,8 +88,8 @@
     <string name="about_screen_license_title">License</string>
     <string name="about_screen_license_text" translatable="false">temperature-android\nCopyright (C) 2018  jiwopene\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program.  If not, see &lt;http://www.gnu.org/licenses/>.</string>
     <string name="about_app">About application</string>
-    <string name="about_screen_link_submit_issue">Report problem (or send enhacement)</string>
+    <string name="about_screen_link_submit_issue">Report problem (or send enhancement)</string>
     <string name="about_screen_icons_title">Icons</string>
-    <string name="about_screen_icons_text">All icons except the launcher icon (themometer on orange background) are from Material Design website.</string>
+    <string name="about_screen_icons_text">All icons except the launcher icon (thermometer on orange background) are from Material Design website.</string>
     <string name="about_screen_icons_view_material" translatable="false">Material Icons</string>
 </resources>
