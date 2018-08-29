@@ -1,0 +1,95 @@
+<!--
+  ~ temperature-android
+  ~ Copyright (C) 2018  jiwopene
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  ~ jiwopene@gmail.com
+  ~ https://gitlab.com/jiwopene/temperature-android
+  -->
+
+<resources>
+    <string name="app_name">Temp. monitor</string>
+
+    <string name="refresh_sensors">Segarkan daftar sensor</string>
+    <string name="no_sensors">Tak ada sensor yang ditemukan. Coba segarkan daftar sensor dan cek jika Anda tidak menyetel semua sensor ke status \"Hidden\".</string>
+    <string name="unknown_sensor">Tak diketahui</string>
+    <string name="no_description">Tak ada deskripsi</string>
+    <string name="no_temperature" translatable="false">\??</string>
+    <string name="sensor_not_found">Sensor tidak ditemukan.</string>
+    <string name="activity_sensor_details">Rincian sensor</string>
+    <string name="update_interval">Selang waktu pembaruan</string>
+    <string name="update_interval_fast">Cepat</string>
+    <string name="update_interval_ultra_fast">Sangat Cepat</string>
+    <string name="update_interval_normal">Normal</string>
+    <string name="update_interval_slow">Pelan</string>
+    <string name="update_interval_custom">Kustom</string>
+    <string name="set_interval">Setel selang waktu kustom</string>
+    <string name="seconds">det</string>
+    <string name="interval_out_of_range">Selang waktu harus diantara 0.1 dan 10 detik</string>
+    <string name="interval_change_can_take_while">Pergantian selang waktu bisa memakan waktu sebentar.</string>
+    <string name="update_interval_status_fmt">Selang waktu: %.3f s</string>
+    <string name="edit_description">Sunting deskripsi</string>
+    <string name="delete_description">Hapus deskripsi</string>
+    <string name="show_sensor_uri">Tunjukkan URI</string>
+    <string name="sensor_uri">Sensor URI</string>
+    <string name="copied">Disalin</string>
+    <string name="placeholder_name">Nama</string>
+    <string name="placeholder_description">Deskripsi</string>
+    <string name="placeholder_temperature" translatable="false">T</string>
+    <string name="show_hidden_sensors">Perlihatkan sensor yang tersembunyi</string>
+    <string name="hidden_flag">TERSEMBUNYI</string>
+    <string name="sensor_is_hidden">Tersembunyi</string>
+    <string name="refresh_sensor_alert">Menyegarkan daftar sensor dapat memperlihatkan semua sensor yang tersembunyi.\nAnda ingin memprosesnya?</string>
+    <string name="activity_temperature_log_settings">Pengaturan pencatatan</string>
+    <string name="log_interval">Pencatatan setiap</string>
+    <string name="log_in_low_power">Pencatatan saat keadaan daya rendah</string>
+    <string name="log_with_screen_off">Pencatatan mengaktifkan perangkat</string>
+    <string name="log_exact_timing">Waktu yang tepat</string>
+    <string name="warning_can_cause_battery_drain">Waktu yang tepat dan pencatatan saat keadaan daya rendah bisa menyebabkan baterai cepat habis.</string>
+    <string name="enable_log">Aktifkan pencatatan</string>
+    <string name="log_settings">Pengaturan pencatatan</string>
+    <string name="log_find_date">Temukan berdasarkan tanggal/waktu</string>
+    <string name="show_log">Perlihatkan catatan</string>
+    <string name="find_by_date_add_time">Tambahkan waktu</string>
+    <string name="find">Temukan</string>
+    <string name="placeholder_time">Waktu</string>
+    <string name="refresh">Segarkan</string>
+    <string name="new_log_data_available">Data baru tersedia. Segarkan untuk melihatnya.</string>
+    <string name="warning_can_cause_battery_drain_too_fast">Jika selang waktu terlalu rendah, membangunkan perangkat bisa menyebabkan baterai cepat habis.</string>
+    <string name="log_when_locked">Mencatat jika perangkat terkunci</string>
+    <string name="cannot_find_in_empty_list">Pencarian tidak di izinkan di daftar yang kosong.</string>
+    <string name="log_delete">Hapus catatan</string>
+    <string name="log_delete_only_this_sensor">Hanya untuk sensor ini</string>
+    <string name="log_delete_all_sensors">Semua sensor</string>
+    <string name="log_delete_really_title">Apa Anda yakin ingin menghapus catatan?</string>
+    <string name="log_delete_really_message_all">Apa Anda yakin ingin menghapus catatan untuk SEMUA sensor?</string>
+    <string name="log_delete_really_message_this">Apa Anda yakin ingin menghapus catatan pada sensor yang TERSELEKSI?</string>
+    <string name="canceled">Dibatalkan</string>
+    <string name="log_delete_really_countdown">Catatan akan dihapus dalam %d s.</string>
+    <string name="log_export_csv">Ekspor sebagai CSV</string>
+    <string name="log_export_failed">Ekspor gagal</string>
+    <string name="log_exported_to">Di ekspor ke file %s. Path telah di salin ke papan klip.</string>
+    <string name="log_export_share">Bagikan file yang di ekspor</string>
+    <string name="about_screen_about_application_title">Tentang aplikasi ini</string>
+    <string name="about_screen_about_application_text">Aplikasi ini menunjukkan dan mencatat suhu perangkat keras yang diukur. Sangkalan: Karena perbedaan dalam perangkat keras, aplikasi ini dapat bekerja berbeda pada perangkat lain.</string>
+    <string name="about_screen_link_view_gitlab">Tunjukkan di GitLab</string>
+    <string name="about_screen_license_title">Lisensi</string>
+    <string name="about_screen_license_text" translatable="false">temperature-android\nCopyright (C) 2018  jiwopene\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program.  If not, see &lt;http://www.gnu.org/licenses/>.</string>
+    <string name="about_app">Tentang aplikasi</string>
+    <string name="about_screen_link_submit_issue">Laporkan masalah (atau kirim perbaikan)</string>
+    <string name="about_screen_icons_title">Ikon</string>
+    <string name="about_screen_icons_text">Semua ikon kecuali ikon peluncur (termometer berlatar belakang warna orange) dari situs web Material Design.</string>
+    <string name="about_screen_icons_view_material" translatable="false">Ikon Material</string>
+</resources>
