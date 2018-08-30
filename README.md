@@ -35,10 +35,14 @@ You can translate the app to other languages. Just download one of strings.xml f
  </tr>
  <tr>
   <td>English</td>
-  <td>Needs check</td>
+  <td>Good</td>
  </tr>
  <tr>
   <td>Czech</td>
+  <td>Good</td>
+ </tr>
+ <tr>
+  <td>Indonesian</td>
   <td>Good</td>
  </tr>
 </table>
