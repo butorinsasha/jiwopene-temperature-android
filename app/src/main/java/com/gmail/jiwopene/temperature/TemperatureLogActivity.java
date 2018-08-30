@@ -842,7 +842,12 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
                 view = new TemperatureLogRecordView(viewGroup.getContext());
             }
             if (i > 0) {
-                ((TemperatureLogRecordView) view).setPreviousTemp(((TemperatureLog.Record) getItem(i - 1)).getTemp());
+                ((TemperatureLogRecordView) view).setNextTemp(((TemperatureLog.Record) getItem(i - 1)).getTemp());
+            } else {
+                ((TemperatureLogRecordView) view).setNextTemp(((TemperatureLog.Record) getItem(i)).getTemp());
+            }
+            if (i < (getCount() - 1)) {
+                ((TemperatureLogRecordView) view).setPreviousTemp(((TemperatureLog.Record) getItem(i + 1)).getTemp());
             } else {
                 ((TemperatureLogRecordView) view).setPreviousTemp(((TemperatureLog.Record) getItem(i)).getTemp());
             }
@@ -890,10 +895,12 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
     }
 
     class TemperatureLogRecordView extends FrameLayout {
+        public static final float MAXIMAL_TEMP = 110f;
 
         private final View internalView;
         private double previousTemp;
         private double currentTemp;
+        private double nextTemp;
         private Date date;
         private boolean gapBefore = false;
         private boolean gapAfter = false;
@@ -906,6 +913,14 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
 
         @Override
         protected void dispatchDraw(Canvas canvas) {
+            double previousTemp = this.previousTemp;
+            double nextTemp = this.nextTemp;
+
+            if (gapAfter)
+                nextTemp = currentTemp;
+            if (gapBefore)
+                previousTemp = currentTemp;
+
             Paint fillStyle = new Paint();
             ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(new float[]{
                     1, 0, 0, 0, 0,
@@ -921,8 +936,11 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
             Path fillPath = new Path();
             fillPath.moveTo(0,0);
             fillPath.lineTo(0, canvas.getHeight());
-            fillPath.lineTo((int)((currentTemp * canvas.getWidth()) / 120), canvas.getHeight());
-            fillPath.lineTo((int)((previousTemp * canvas.getWidth()) / 120), 0);
+            // Starting from bottom
+            fillPath.lineTo((float)(((currentTemp + previousTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP, canvas.getHeight());
+            fillPath.lineTo((float)(((currentTemp)) * (float)canvas.getWidth()) / MAXIMAL_TEMP, canvas.getHeight() / 2);
+            fillPath.lineTo((float)(((currentTemp + nextTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP, 0);
+
 
             Paint lineStyle = new Paint();
             lineStyle.setColor(getContext().getResources().getColor(R.color.colorPrimary));
@@ -933,21 +951,21 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
 
             Path linePath = new Path();
             double averageTemp = (currentTemp + previousTemp) / 2;
-            if (!gapAfter && !gapBefore) {
-                linePath.moveTo((int)((currentTemp * canvas.getWidth()) / 120), canvas.getHeight());
-                linePath.lineTo((int)((previousTemp * canvas.getWidth()) / 120), 0);
+
+            if (gapBefore && gapAfter) {
+                linePath.moveTo((float)currentTemp * (float)canvas.getWidth() / MAXIMAL_TEMP, (canvas.getHeight() * 1) / 3);
+                linePath.lineTo((float)currentTemp * (float)canvas.getWidth() / MAXIMAL_TEMP, (canvas.getHeight() * 2) / 3);
             }
-            if (!gapAfter && gapBefore) {
-                linePath.moveTo((int)((averageTemp * canvas.getWidth()) / 120), canvas.getHeight() / 2);
-                linePath.lineTo((int)((previousTemp * canvas.getWidth()) / 120), 0);
-            }
-            if (gapAfter && !gapBefore) {
-                linePath.moveTo((int)((currentTemp * canvas.getWidth()) / 120), canvas.getHeight());
-                linePath.lineTo((int)((averageTemp * canvas.getWidth()) / 120), canvas.getHeight() / 2);
-            }
-            if (gapAfter && gapBefore) {
-                linePath.moveTo((int)((currentTemp * canvas.getWidth()) / 120), (canvas.getHeight() * 2) / 3);
-                linePath.lineTo((int)((previousTemp * canvas.getWidth()) / 120), canvas.getHeight() / 3);
+            else {
+                linePath.moveTo((float)(((currentTemp + previousTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP, canvas.getHeight());
+                if (gapBefore)
+                    linePath.moveTo((float)(((currentTemp)) * (float)canvas.getWidth()) / MAXIMAL_TEMP, canvas.getHeight() / 2);
+                else
+                    linePath.lineTo((float)(((currentTemp)) * (float)canvas.getWidth()) / MAXIMAL_TEMP, canvas.getHeight() / 2);
+                if (gapAfter)
+                    linePath.moveTo((float)(((currentTemp + nextTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP, 0);
+                else
+                    linePath.lineTo((float)(((currentTemp + nextTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP, 0);
             }
 
             canvas.drawPath(fillPath, fillStyle);
@@ -957,6 +975,11 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
 
         public void setPreviousTemp(double previous) {
             this.previousTemp = previous;
+            invalidate();
+        }
+
+        public void setNextTemp(double next) {
+            this.nextTemp = next;
             invalidate();
         }
 
