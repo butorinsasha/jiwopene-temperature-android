@@ -40,7 +40,6 @@ import java.util.Locale;
  * */
 public abstract class IntervalSubmenu {
     private Context context;
-    private SubMenu submenu;
     private GlobalPreferences globalPreferences;
 
     public IntervalSubmenu(Context context) {
@@ -50,7 +49,7 @@ public abstract class IntervalSubmenu {
     }
 
     public void addToMenu(Menu menu, MenuInflater inflater) {
-        this.submenu = menu.addSubMenu(R.string.update_interval);
+        SubMenu submenu = menu.addSubMenu(R.string.update_interval);
         submenu.getItem().setIcon(R.drawable.baseline_av_timer_white_24);
         submenu.getItem().setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         inflater.inflate(R.menu.interval, submenu);

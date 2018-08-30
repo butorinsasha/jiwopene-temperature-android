@@ -40,13 +40,10 @@ import java.util.Date;
 public class TemperatureLogService extends Service {
 
     private static final String EXTRA_INSTANCE = "com.gmail.jiwopene.TemperatureLogService.EXTRA_INSTANCE";
-    private SensorStorage storage;
     private boolean screenOn = false;
     private AlarmManager alarmManager;
     private GlobalPreferences globalPreferences;
     private BroadcastReceiver receiver;
-    private KeyguardManager keyguardManager;
-    private TemperatureLog log;
 
     public TemperatureLogService() {
     }
@@ -59,10 +56,10 @@ public class TemperatureLogService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+        KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
         globalPreferences = new GlobalPreferences(this);
-        storage = new SensorStorage(this);
-        log = new TemperatureLog(this);
+        SensorStorage storage = new SensorStorage(this);
+        TemperatureLog log = new TemperatureLog(this);
 
         long instance = intent.getLongExtra(EXTRA_INSTANCE, 0);
         Log.d(TemperatureLogService.class.getName(), "Logging");

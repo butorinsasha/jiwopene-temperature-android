@@ -36,7 +36,6 @@ import java.util.Locale;
 public class CustomIntervalDialog extends AlertDialog implements TextView.OnEditorActionListener, SeekBar.OnSeekBarChangeListener, View.OnKeyListener {
     private final EditText te_interval;
     private final SeekBar sb_interval;
-    private View view;
     private int interval;
 
     private GlobalPreferences globalPreferences;
@@ -46,7 +45,7 @@ public class CustomIntervalDialog extends AlertDialog implements TextView.OnEdit
 
         setTitle(R.string.set_interval);
 
-        view = getLayoutInflater().inflate(R.layout.dialog_custom_interval, null);
+        View view = getLayoutInflater().inflate(R.layout.dialog_custom_interval, null);
         setView(view);
 
         globalPreferences = new GlobalPreferences(getContext());
