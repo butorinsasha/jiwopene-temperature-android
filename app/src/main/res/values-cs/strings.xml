@@ -77,7 +77,7 @@
     <string name="log_delete_really_countdown">Záznam bude vymazán za %d s.</string>
     <string name="log_export_csv">Exportovat jako CSV</string>
     <string name="log_export_failed">Export selhal</string>
-    <string name="log_exported_to">Exportováno do fouboru %s. Cesta je zkopírována do schránky.</string>
+    <string name="log_exported_to">Exportováno do souboru %s. Cesta je zkopírována do schránky.</string>
     <string name="log_export_share">Sdílet exportovaný soubor</string>
     <string name="cannot_find_in_empty_list">Vyhledávání není v prázdném seznamu možné.</string>
     <string name="about_screen_about_application_text">Tato aplikace zobrazuje teploty hardwaru zařízení. Upozornění: Kvůli rozdílům v hardwaru může na každém zařízení fungovat jinak.</string>
