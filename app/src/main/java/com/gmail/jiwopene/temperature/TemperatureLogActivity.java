@@ -495,6 +495,8 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
 
             dialog.dismiss();
             Toast.makeText(TemperatureLogActivity.this, R.string.log_import_backup_finished, Toast.LENGTH_LONG).show();
+
+            refreshList();
         }
 
         @Override
