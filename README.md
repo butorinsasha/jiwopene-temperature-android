@@ -12,7 +12,7 @@ Supported languages: English, Indonesian and Czech ([see below](#status-of-trans
 - Log can be exported as CSV
 
 ## Changelog
-See [CHANGELOG file](CHANGELOG.md)
+See [Tags page](../tags)
 
 ## Contribute
 ### Help translate to other languages
