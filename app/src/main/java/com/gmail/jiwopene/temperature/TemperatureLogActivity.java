@@ -318,6 +318,10 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         switch (requestCode) {
             case ACTIVITY_RESULT_IMPORT_BACKUP_SELECTED:
+                if (data == null) {
+                    Toast.makeText(this, R.string.canceled, Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 try {
                     // Show confirm dialog
                     final AlertDialog dialog = new AlertDialog.Builder(this)
