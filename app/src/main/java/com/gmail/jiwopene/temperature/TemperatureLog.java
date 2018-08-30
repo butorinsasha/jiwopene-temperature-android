@@ -349,6 +349,7 @@ public class TemperatureLog {
                 String uri = lineBuffer.toString();
                 sensors.put(id, uri);
 
+                lineBuffer.delete(0, lineBuffer.length());
                 while (true) {
                     byteBuffer = reader.read();
                     if (statusChangeListener != null && size != 0)
