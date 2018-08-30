@@ -131,7 +131,7 @@ public class TemperatureLog {
             args.add(sensor.toString());
         }
 
-        return database.query(TABLE, new String[]{COL_TEMP, COL_TIMESTAMP, COL_URI}, "(? or " + COL_TIMESTAMP + "> ?) and (? or " + COL_TIMESTAMP + "> ?) and (? or "+COL_URI+" = ?)", args.toArray(new String[6]), null, null, COL_ID + " desc", limit);
+        return database.query(TABLE, new String[]{COL_TEMP, COL_TIMESTAMP, COL_URI}, "(? or " + COL_TIMESTAMP + "> ?) and (? or " + COL_TIMESTAMP + "> ?) and (? or "+COL_URI+" = ?)", args.toArray(new String[6]), null, null, COL_TIMESTAMP + " desc", limit);
     }
 
     public TemperatureLog.Record[] fetch(@Nullable Integer last, @Nullable Date from, @Nullable Date to, @Nullable Uri sensor) {
