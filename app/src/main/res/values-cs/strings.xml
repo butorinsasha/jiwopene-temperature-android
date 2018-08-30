@@ -88,4 +88,15 @@
     <string name="about_screen_link_submit_issue">Nahlásit chybu (nebo navrhnout vylepšení)</string>
     <string name="about_screen_icons_title">Ikony</string>
     <string name="about_screen_icons_text">Všechny ikony kromě ikony aplikace (teploměr na oranžovém pozadí) jsou z webových stránek Material Design.</string>
+    <string name="log_export_backup">Vytvořit zálohu</string>
+    <string name="log_import_backup">Načíst zálohu</string>
+    <string name="log_import_select_file">Zvolte soubor</string>
+    <string name="download_filemanager">Stáhněte si správce souborů</string>
+    <string name="log_import_warning">Záloha bude PŘIDÁNA do aktuálního záznamu. Zvažte vytvoření zálohy záznamu. Pokud nechcete ponechat stávající záznam, smažte ho před načtením zálohy.</string>
+    <string name="log_import_loading_info">Načítání informací&#8230;</string>
+    <string name="log_import_backup_finished">Import dokončen</string>
+    <string name="log_import_backup_import_button">Importovat</string>
+    <string name="log_import_backup_loading">Načítání zálohy&#8230;</string>
+    <string name="log_import_failed">Načítání selhalo</string>
+    <string name="log_import_file_empty">Soubor je prázdný</string>
 </resources>

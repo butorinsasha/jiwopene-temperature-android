@@ -27,4 +27,5 @@
     <dimen name="custom_interval_min_dialog_width">450dip</dimen>
     <dimen name="log_temp_font_size">24sp</dimen>
     <dimen name="chart_line_width">6dp</dimen>
+    <dimen name="log_import_dialog_width">300dp</dimen>
 </resources>

@@ -38,6 +38,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -58,6 +59,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -71,14 +73,19 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.net.URLConnection;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class TemperatureLogActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    protected static final int ACTIVITY_RESULT_IMPORT_BACKUP_SELECTED = 0;
 
     private static final long CHECK_NEW_ITEMS_EVERY = 20000;
     private static final long REFRESH_BUTTON_BLINK_INTERVAL = 500;
@@ -217,7 +224,9 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
             case R.id.delete_only_this:
                 showDeleteLogDialog(selectedSensorIdentifier);
                 return true;
-            case R.id.export_csv:
+            case R.id.export_csv: {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
                 File directory;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "TemperatureLog");
@@ -226,31 +235,268 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
                     directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "TemperatureLog");
                 }
                 File file = new File(String.format(Locale.ROOT, "%s/export-%d.csv", directory, new Date().getTime()));
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-
+                if (!directory.mkdirs())
+                    Log.e("Mkdirs", "Cannot create "+ directory.getPath());
                 try {
-                    if (!directory.mkdirs())
-                        Log.e("Mkdirs", "Cannot create "+ directory.getPath());
                     BufferedWriter bw = new BufferedWriter(new FileWriter(file));
                     bw.write(new TemperatureLog(this).getAsCSV(null));
                     bw.close();
-                    ((ClipboardManager)getSystemService(CLIPBOARD_SERVICE)).setPrimaryClip(ClipData.newPlainText(file.getPath(), file.getAbsolutePath()));
-                    Toast.makeText(this, String.format(Locale.getDefault(), getString(R.string.log_exported_to), file.getPath()), Toast.LENGTH_LONG).show();
-                    Intent shareIntent = new Intent();
-                    shareIntent.setAction(Intent.ACTION_SEND);
-                    shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-                    shareIntent.setType(URLConnection.guessContentTypeFromName(file.getName()));
-                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    startActivity(Intent.createChooser(shareIntent, getString(R.string.log_export_share)));
-                } catch (IOException e) {
+                    showShareExportDialog(file);
+                }
+                catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(this, R.string.log_export_failed, Toast.LENGTH_LONG).show();
                 }
                 return true;
+            }
+            case R.id.export_backup: {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+                File directory;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "TemperatureLog");
+                }
+                else {
+                    directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "TemperatureLog");
+                }
+                File file = new File(String.format(Locale.ROOT, "%s/export-%d.tlb", directory, new Date().getTime()));
+                if (!directory.mkdirs())
+                    Log.e("Mkdirs", "Cannot create "+ directory.getPath());
+                try {
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+                    bw.write(new TemperatureLog(this).getBackup());
+                    bw.close();
+                    showShareExportDialog(file);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, R.string.log_export_failed, Toast.LENGTH_LONG).show();
+                }
+                return true;
+            }
+            case R.id.import_backup:
+                showImportBackupDialog();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    protected void showShareExportDialog(File file) {
+        ((ClipboardManager)getSystemService(CLIPBOARD_SERVICE)).setPrimaryClip(ClipData.newPlainText(file.getPath(), file.getAbsolutePath()));
+        Toast.makeText(this, String.format(Locale.getDefault(), getString(R.string.log_exported_to), file.getPath()), Toast.LENGTH_LONG).show();
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+        shareIntent.setType(URLConnection.guessContentTypeFromName(file.getName()));
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.log_export_share)));
+    }
+
+    protected void showImportBackupDialog() {
+        Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        fileIntent.setType("*/*");
+        fileIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        try {
+            startActivityForResult(Intent.createChooser(fileIntent, getString(R.string.log_import_select_file)), ACTIVITY_RESULT_IMPORT_BACKUP_SELECTED);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, R.string.download_filemanager, Toast.LENGTH_LONG).show();
+
+            // Direct user to Ghost Commander download
+            // UNTESTED
+            try {
+                startActivity(Intent.parseUri("market://details?id=com.ghostsq.commander", 0));
+            } catch (URISyntaxException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        switch (requestCode) {
+            case ACTIVITY_RESULT_IMPORT_BACKUP_SELECTED:
+                try {
+                    // Show confirm dialog
+                    final AlertDialog dialog = new AlertDialog.Builder(this)
+                        .setTitle(R.string.log_import_backup)
+                        .create();
+                    dialog.setView(dialog.getLayoutInflater().inflate(R.layout.dialog_load_backup, null));
+                    final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    loadBackup(data.getData());
+                                    break;
+                            }
+                        }
+                    };
+                    dialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(android.R.string.cancel), listener);
+                    dialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.log_import_backup_import_button), listener);
+                    dialog.show();
+
+                    LoadBackupInfoAsyncTask task = new LoadBackupInfoAsyncTask(dialog);
+                    task.execute(data.getData());
+                }
+                catch (Exception e) {
+                    Toast.makeText(this, R.string.log_import_failed, Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+                break;
+        }
+    }
+
+    public void loadBackup(Uri backup) {
+        new LoadBackupAsyncTask().execute(backup);
+    }
+
+    private class LoadBackupInfoAsyncTask extends AsyncTask<Uri, Double, String> {
+
+        Dialog dialog;
+
+        public LoadBackupInfoAsyncTask(Dialog dialog) {
+            super();
+
+            this.dialog = dialog;
+        }
+
+        @Override
+        protected String doInBackground(Uri... uris) {
+            boolean empty = true;
+            try {
+                InputStream backup = getContentResolver().openInputStream(uris[0]);
+                long size = backup.available(); // To calculate position in stream
+
+                StringBuilder output = new StringBuilder();
+
+                // Get description
+                ArrayList<Byte> description_bytes_list = new ArrayList<>();
+                while (true) {
+                    int b = backup.read();
+                    if (b <= 0)
+                        break;
+                    description_bytes_list.add((byte)b);
+
+                    reportPosition(backup.available(), size-backup.available());
+                }
+                byte[] description_bytes = new byte[description_bytes_list.size()];
+                for (int i = 0; i < description_bytes.length; i++)
+                    description_bytes[i] = description_bytes_list.get(i);
+
+                output.append(new String(description_bytes));
+                output.append("\n");
+
+                // Look for sensors
+                lookForSensors: while (true) {
+                    int byteBuffer;
+                    while (true) {
+                        byteBuffer = backup.read();
+                        if (byteBuffer <= 0)
+                            break lookForSensors;
+                        if (byteBuffer == 'S')
+                            break;
+                        reportPosition(backup.available(), size-backup.available());
+                    }
+                    for (int i = 0; i < 2; i++)
+                        while (true) {
+                            byteBuffer = backup.read();
+                            if (byteBuffer <= 0)
+                                break lookForSensors;
+                            if (byteBuffer == ' ')
+                                break;
+                            reportPosition(backup.available(), size-backup.available());
+                        }
+
+                    while (true) {
+                        byteBuffer = backup.read();
+                        if (byteBuffer < 0)
+                            break lookForSensors;
+                        if (byteBuffer == 0)
+                            break;
+                        output.append((char)byteBuffer);
+                        empty = false;
+                        reportPosition(backup.available(), size-backup.available());
+                    }
+                    output.append("\n");
+                }
+
+                if (empty)
+                    output.append(getString(R.string.log_import_file_empty));
+
+                return output.toString();
+            }
+            catch (Exception e) {
+                return null;
+            }
+        }
+
+        private void reportPosition(long size, long position) {
+            publishProgress((double) position / (double) size);
+        }
+
+        @Override
+        protected void onProgressUpdate(Double... values) {
+            super.onProgressUpdate(values);
+
+            ((ProgressBar)dialog.findViewById(R.id.progressbar)).setProgress((int)(values[0] * 1000.0d));
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            dialog.findViewById(R.id.progressbar).setVisibility(View.GONE);
+            ((TextView)dialog.findViewById(R.id.backup_info)).setText(s);
+        }
+    }
+
+    private class LoadBackupAsyncTask extends AsyncTask<Uri, Double, Boolean> implements TemperatureLog.LoadFromBackupStatusChangeListener {
+
+        private AlertDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            dialog = new AlertDialog.Builder(TemperatureLogActivity.this)
+                    .setTitle(R.string.log_import_backup)
+                    .create();
+            dialog.setView(dialog.getLayoutInflater().inflate(R.layout.dialog_load_backup_progress, null));
+            dialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Uri... uris) {
+            try {
+                new TemperatureLog(TemperatureLogActivity.this).loadFromBackup(getContentResolver().openInputStream(uris[0]), this);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public void statusChanged(double status) {
+            publishProgress(status);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+
+            dialog.dismiss();
+            Toast.makeText(TemperatureLogActivity.this, R.string.log_import_backup_finished, Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Double... values) {
+            super.onProgressUpdate(values);
+
+            ((ProgressBar)dialog.findViewById(R.id.progressbar)).setProgress((int)(values[0] * 1000));
         }
     }
 

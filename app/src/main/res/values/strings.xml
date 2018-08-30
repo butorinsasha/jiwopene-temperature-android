@@ -92,4 +92,15 @@
     <string name="about_screen_icons_title">Icons</string>
     <string name="about_screen_icons_text">All icons except the launcher icon (themometer on orange background) are from Material Design website.</string>
     <string name="about_screen_icons_view_material" translatable="false">Material Icons</string>
+    <string name="log_export_backup">Save backup</string>
+    <string name="log_import_backup">Load backup</string>
+    <string name="log_import_select_file">Select file</string>
+    <string name="download_filemanager">Please download a file manager</string>
+    <string name="log_import_warning">The backup will be ADDED to the current log. Consider creating backup of the current log. If you don\'t want current log, delete it before loading backup.</string>
+    <string name="log_import_loading_info">Loading info&#8230;</string>
+    <string name="log_import_failed">Loading failed</string>
+    <string name="log_import_file_empty">File is empty</string>
+    <string name="log_import_backup_loading">Loading backup&#8230;</string>
+    <string name="log_import_backup_import_button">Import</string>
+    <string name="log_import_backup_finished">Import finished</string>
 </resources>
