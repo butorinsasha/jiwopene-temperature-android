@@ -22,7 +22,6 @@
 package com.gmail.jiwopene.temperature.sensors;
 
 import android.content.Context;
-
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
