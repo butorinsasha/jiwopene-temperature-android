@@ -190,7 +190,7 @@ public class TemperatureLog {
             sensorRecords.close();
         }
 
-        StringBuffer csv = new StringBuffer();
+        StringBuilder csv = new StringBuilder();
 
         // Write header
         csv.append("\"TIME\",");
@@ -266,7 +266,7 @@ public class TemperatureLog {
      * point.
      */
     public String getBackup() {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
 
         stringBuffer.append("Temperature log backup from "+context.getPackageName()+"\n");
         stringBuffer.append("Version "+BuildConfig.VERSION_NAME+" (#"+BuildConfig.VERSION_CODE+")\n");
@@ -312,7 +312,7 @@ public class TemperatureLog {
         // Skip header
         while (reader.read() > 0);
 
-        StringBuffer lineBuffer = new StringBuffer();
+        StringBuilder lineBuffer = new StringBuilder();
         int byteBuffer;
 
         Hashtable<Long, String> sensors = new Hashtable<>(1);
