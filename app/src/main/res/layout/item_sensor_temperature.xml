@@ -85,5 +85,6 @@
         app:layout_constraintEnd_toStartOf="@+id/name"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp" />
 </android.support.constraint.ConstraintLayout>
