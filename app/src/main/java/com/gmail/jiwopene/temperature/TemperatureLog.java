@@ -142,12 +142,16 @@ public class TemperatureLog {
         Record[] out = new Record[records.getCount()];
 
         for (int i = 0; i < out.length; i++, records.moveToNext()) {
-            out[i] = new Record(new Date(records.getLong(1)), Uri.parse(records.getString(2)), (double)records.getInt(0) / 1000d);
+            out[i] = rowToRecord(records);
         }
 
         records.close();
 
         return out;
+    }
+
+    public TemperatureLog.Record rowToRecord(Cursor cursor) {
+        return new Record(new Date(cursor.getLong(1)), Uri.parse(cursor.getString(2)), (double)cursor.getInt(0) / 1000d);
     }
 
     public void deleteLog(@Nullable Uri sensor) {

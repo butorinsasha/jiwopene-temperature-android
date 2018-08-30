@@ -31,6 +31,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
 import android.graphics.ColorMatrixColorFilter;
@@ -792,10 +793,13 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
     }
 
     private class LogAdapter extends BaseAdapter {
-        TemperatureLog.Record[] data;
+        Cursor dataCursor;
+        TemperatureLog log;
 
         LogAdapter(Context context, Uri identifier) {
-            data = new TemperatureLog(context).fetch(null, null, null, identifier);
+            log = new TemperatureLog(context);
+            dataCursor = log.fetchAsCursor(null, null, null, identifier);
+            dataCursor.moveToFirst();
         }
 
         @Override
@@ -820,13 +824,15 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
 
         @Override
         public int getCount() {
-            return data.length;
+            return dataCursor.getCount();
         }
 
         @Override
         public Object getItem(int i) {
-            if (getCount() > i)
-                return data[i];
+            if (getCount() > i) {
+                dataCursor.moveToPosition(i);
+                return log.rowToRecord(dataCursor);
+            }
             return null;
         }
 
