@@ -107,7 +107,7 @@ public final class SensorStorage {
         sensors.add(uri.toString());
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putStringSet("sensors", new ArraySet<String>(sensors));
+        editor.putStringSet("sensors", new ArraySet<>(sensors));
         editor.apply();
     }
 
@@ -180,7 +180,7 @@ public final class SensorStorage {
         sensors.add("android:///battery");
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putStringSet("sensors", new ArraySet<String>(sensors));
+        editor.putStringSet("sensors", new ArraySet<>(sensors));
         editor.apply();
     }
 }
