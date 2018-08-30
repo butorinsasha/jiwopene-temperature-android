@@ -90,8 +90,8 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
 
     private static final long CHECK_NEW_ITEMS_EVERY = 20000;
     private static final long REFRESH_BUTTON_BLINK_INTERVAL = 500;
-    SensorStorage storage;
-    GlobalPreferences global;
+    private SensorStorage storage;
+    private GlobalPreferences global;
     private Uri selectedSensorIdentifier;
     private MenuItem refreshButton = null;
     private Date lastDate = null;
@@ -136,7 +136,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
         return refreshButtonDarkened;
     }
 
-    boolean newDataAvailable = false;
+    private boolean newDataAvailable = false;
     protected void setNewDataAvailable(boolean newDataAvailable) {
         if (this.newDataAvailable == newDataAvailable)
             return;
@@ -155,8 +155,8 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
         return newDataAvailable;
     }
 
-    Handler refreshButtonBlinkHandler = new Handler();
-    Runnable refreshButtonBlink = new Runnable() {
+    private Handler refreshButtonBlinkHandler = new Handler();
+    private Runnable refreshButtonBlink = new Runnable() {
         @Override
         public void run() {
             setRefreshButtonBlinkState(!getRefreshButtonBlinkState());
@@ -164,8 +164,8 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
         }
     };
 
-    Handler checkNewDataHandler = new Handler();
-    Runnable checkNewData = new Runnable() {
+    private Handler checkNewDataHandler = new Handler();
+    private Runnable checkNewData = new Runnable() {
         @Override
         public void run() {
             if (selectedSensorIdentifier != null) {
@@ -362,7 +362,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
 
         Dialog dialog;
 
-        public LoadBackupInfoAsyncTask(Dialog dialog) {
+        LoadBackupInfoAsyncTask(Dialog dialog) {
             super();
 
             this.dialog = dialog;
@@ -507,7 +507,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
         }
     }
 
-    public void showDeleteLogDialog(final Uri sensor) {
+    private void showDeleteLogDialog(final Uri sensor) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.log_delete_really_title)
                 .setMessage(sensor == null ? R.string.log_delete_really_message_all :
@@ -646,7 +646,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
         return date;
     }
 
-    public void scrollToDate(Date date) {
+    private void scrollToDate(Date date) {
         ListView recordList = findViewById(R.id.records);
 
         int foundPosition = recordList.getAdapter().getCount() - 1;
@@ -667,7 +667,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
         recordList.setSelection(foundPosition);
     }
 
-    public SensorSelectorAdapter sensorSelectorAdapterFromArray(@NonNull Sensor[] sensors) {
+    private SensorSelectorAdapter sensorSelectorAdapterFromArray(@NonNull Sensor[] sensors) {
         CachedSensorInfo cachedSensors[] = new CachedSensorInfo[sensors.length];
         for (int i = 0; i < sensors.length; i++) {
             cachedSensors[i] = new CachedSensorInfo();

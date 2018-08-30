@@ -106,7 +106,7 @@ public class SensorActivity extends AppCompatActivity {
         updateTimerHandler.postDelayed(updateTimer, 0);
     }
 
-    public void update() {
+    private void update() {
         try {
             tv_name.setText(sensor.getName());
         }

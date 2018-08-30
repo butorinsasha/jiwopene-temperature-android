@@ -87,7 +87,7 @@ public class TemperatureLogSettingsActivity extends AppCompatActivity implements
         return super.onCreateOptionsMenu(menu);
     }
 
-    protected void refreshUI() {
+    private void refreshUI() {
         enableSwitch.setChecked(global.getLogEnabled());
 
         ((CheckBox)findViewById(R.id.low_power)).setChecked(global.getLogEnabledInLowPowerState());
@@ -157,7 +157,7 @@ public class TemperatureLogSettingsActivity extends AppCompatActivity implements
 
     class TimeHolder {
         int mins;
-        public TimeHolder(int mins) {
+        TimeHolder(int mins) {
             this.mins = mins;
         }
 

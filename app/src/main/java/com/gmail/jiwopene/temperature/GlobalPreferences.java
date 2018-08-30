@@ -26,9 +26,9 @@ import android.content.SharedPreferences;
 import android.os.Build;
 
 
-public class GlobalPreferences {
+class GlobalPreferences {
     public static final int UPDATE_INTERVAL_CAN_TAKE_WHILE_LIMIT = 1000;
-    protected SharedPreferences preferences;
+    private SharedPreferences preferences;
 
     public GlobalPreferences(Context context) {
         preferences = context.getSharedPreferences("global", Context.MODE_PRIVATE);

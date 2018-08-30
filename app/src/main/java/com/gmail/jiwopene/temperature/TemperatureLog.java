@@ -47,7 +47,7 @@ import java.util.Hashtable;
 import java.util.Locale;
 
 public class TemperatureLog {
-    public static final int CURRENT_VERSION = 1;
+    private static final int CURRENT_VERSION = 1;
     private static final String TABLE = "log";
     private static final String COL_ID = "id";
     private static final String COL_URI = "uri";
@@ -56,8 +56,8 @@ public class TemperatureLog {
 
     private final Context context;
 
-    SQLiteDatabase database;
-    SensorStorage sensorStorage;
+    private SQLiteDatabase database;
+    private SensorStorage sensorStorage;
 
     public TemperatureLog(Context context) {
         this.context = context;
@@ -399,7 +399,7 @@ public class TemperatureLog {
         double temp;
         Uri identifier;
 
-        public Record(@NonNull Date date, @NonNull Uri identifier, double temp) {
+        Record(@NonNull Date date, @NonNull Uri identifier, double temp) {
             this.date = date;
             this.temp = temp;
             this.identifier = identifier;

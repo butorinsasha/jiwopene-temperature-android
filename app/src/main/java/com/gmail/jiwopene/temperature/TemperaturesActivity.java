@@ -46,11 +46,11 @@ import java.util.Locale;
 
 public class TemperaturesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    SensorStorage sensorStorage;
-    GlobalPreferences globalPreferences;
+    private SensorStorage sensorStorage;
+    private GlobalPreferences globalPreferences;
 
-    ListView sensorList;
-    IntervalSubmenu intervalSubmenu;
+    private ListView sensorList;
+    private IntervalSubmenu intervalSubmenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +139,7 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
         refreshValues();
     }
 
-    public void refreshValues() {
+    private void refreshValues() {
         ((SensorListAdapter)(sensorList.getAdapter())).refreshValues();
     }
 
@@ -177,7 +177,7 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
         private final SensorStorage sensorStorage;
         private final TemperaturesActivity temperaturesActivity;
 
-        public RefreshTask(SensorStorage sensorStorage, TemperaturesActivity temperaturesActivity) {
+        RefreshTask(SensorStorage sensorStorage, TemperaturesActivity temperaturesActivity) {
             super();
             this.sensorStorage = sensorStorage;
             this.temperaturesActivity = temperaturesActivity;
@@ -200,7 +200,7 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
 
         private CachedSensor[] sensors;
 
-        public SensorListAdapter(Sensor[] sensors, SensorStorage storage) {
+        SensorListAdapter(Sensor[] sensors, SensorStorage storage) {
             ArrayList<CachedSensor> cachedSensors = new ArrayList<>(sensors.length);
             for (Sensor s : sensors) {
                 CachedSensor cachedSensor = new CachedSensor();
@@ -211,7 +211,7 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
             this.sensors = (cachedSensors.toArray(new CachedSensor[]{}));
         }
 
-        public void refreshValues() {
+        void refreshValues() {
             for (CachedSensor cachedSensor : sensors) {
                 cachedSensor.refresh();
             }
@@ -316,14 +316,14 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
         }
 
         private class CachedSensor {
-            public String name;
-            public String description;
-            public Float value;
-            public Boolean hidden;
-            public Sensor original;
-            public SensorStorage storage;
+            String name;
+            String description;
+            Float value;
+            Boolean hidden;
+            Sensor original;
+            SensorStorage storage;
 
-            public void refresh() {
+            void refresh() {
                 try {
                     name = original.getName();
                 }

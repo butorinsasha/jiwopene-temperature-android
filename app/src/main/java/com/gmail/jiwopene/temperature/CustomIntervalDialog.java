@@ -33,7 +33,7 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-public class CustomIntervalDialog extends AlertDialog implements TextView.OnEditorActionListener, SeekBar.OnSeekBarChangeListener, View.OnKeyListener {
+class CustomIntervalDialog extends AlertDialog implements TextView.OnEditorActionListener, SeekBar.OnSeekBarChangeListener, View.OnKeyListener {
     private final EditText te_interval;
     private final SeekBar sb_interval;
     private int interval;
@@ -134,15 +134,15 @@ public class CustomIntervalDialog extends AlertDialog implements TextView.OnEdit
 
     }
 
-    protected void refreshEditText() {
+    private void refreshEditText() {
         te_interval.setText(String.format(Locale.getDefault(), "%.3f", interval / 1000f));
     }
 
-    protected void refreshSeekBar() {
+    private void refreshSeekBar() {
         sb_interval.setProgress((int)((500d*Math.log((double)interval))/(Math.log(2d)+Math.log(5d))-1000d));
     }
 
-    protected void refreshBoth() {
+    private void refreshBoth() {
         refreshEditText();
         refreshSeekBar();
     }

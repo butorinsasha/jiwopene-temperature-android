@@ -38,7 +38,7 @@ import java.util.Locale;
  *
  * You must call addToMenu
  * */
-public abstract class IntervalSubmenu {
+abstract class IntervalSubmenu {
     private Context context;
     private GlobalPreferences globalPreferences;
 
@@ -95,7 +95,7 @@ public abstract class IntervalSubmenu {
         return true;
     }
 
-    public abstract void invalidateOptionsMenu();
+    protected abstract void invalidateOptionsMenu();
 
     private void updateMenu(Menu menu) {
         menu.findItem(R.id.ultra_fast).setChecked(false);
