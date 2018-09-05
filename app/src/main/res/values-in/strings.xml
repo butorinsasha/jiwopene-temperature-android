@@ -88,4 +88,15 @@
     <string name="about_screen_link_submit_issue">Laporkan masalah (atau kirim perbaikan)</string>
     <string name="about_screen_icons_title">Ikon</string>
     <string name="about_screen_icons_text">Semua ikon kecuali ikon peluncur (termometer berlatar belakang warna orange) dari situs web Material Design.</string>
+    <string name="log_export_backup">Simpan cadangan</string>
+    <string name="log_import_backup">Muat cadangan</string>
+    <string name="log_import_select_file">Pilih file</string>
+    <string name="download_filemanager">Silahkan unduh pengelola file</string>
+    <string name="log_import_warning">Cadangan akan DITAMBAHKAN ke log terkini. Pertimbangkan membuat cadangan log saat ini. Jika Anda tidak ingin log saat ini, hapus sebelum memuat cadangan.</string>
+    <string name="log_import_loading_info">Memuat info&#8230;</string>
+    <string name="log_import_failed">Gagal memuat</string>
+    <string name="log_import_file_empty">File kosong</string>
+    <string name="log_import_backup_loading">Memuat cadangan&#8230;</string>
+    <string name="log_import_backup_import_button">Impor</string>
+    <string name="log_import_backup_finished">Impor selesai</string>
 </resources>
