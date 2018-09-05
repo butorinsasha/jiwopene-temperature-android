@@ -49,6 +49,6 @@ You can translate the app to other languages. Just download one of strings.xml f
  <tr>
   <td>Indonesian</td>
   <td>Good</td>
-  <td>No</td>
+  <td>Yes</td>
  </tr>
 </table>

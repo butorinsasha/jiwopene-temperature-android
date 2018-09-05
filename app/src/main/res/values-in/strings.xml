@@ -26,6 +26,7 @@
     <string name="no_sensors">Tak ada sensor yang ditemukan. Coba segarkan daftar sensor dan cek jika Anda tidak menyetel semua sensor ke status \"Hidden\".</string>
     <string name="unknown_sensor">Tak diketahui</string>
     <string name="no_description">Tak ada deskripsi</string>
+    <string name="no_temperature">\??</string>
     <string name="sensor_not_found">Sensor tidak ditemukan.</string>
     <string name="activity_sensor_details">Rincian sensor</string>
     <string name="update_interval">Selang waktu pembaruan</string>
@@ -46,6 +47,7 @@
     <string name="copied">Disalin</string>
     <string name="placeholder_name">Nama</string>
     <string name="placeholder_description">Deskripsi</string>
+    <string name="placeholder_temperature">T</string>
     <string name="show_hidden_sensors">Perlihatkan sensor yang tersembunyi</string>
     <string name="hidden_flag">TERSEMBUNYI</string>
     <string name="sensor_is_hidden">Tersembunyi</string>
@@ -84,8 +86,21 @@
     <string name="about_screen_about_application_text">Aplikasi ini menunjukkan dan mencatat suhu perangkat keras yang diukur. Sangkalan: Karena perbedaan dalam perangkat keras, aplikasi ini dapat bekerja berbeda pada perangkat lain.</string>
     <string name="about_screen_link_view_gitlab">Tunjukkan di GitLab</string>
     <string name="about_screen_license_title">Lisensi</string>
+    <string name="about_screen_license_text">temperature-android\nCopyright (C) 2018  jiwopene\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program.  If not, see &lt;http://www.gnu.org/licenses/>.</string>
     <string name="about_app">Tentang aplikasi</string>
     <string name="about_screen_link_submit_issue">Laporkan masalah (atau kirim perbaikan)</string>
     <string name="about_screen_icons_title">Ikon</string>
     <string name="about_screen_icons_text">Semua ikon kecuali ikon peluncur (termometer berlatar belakang warna orange) dari situs web Material Design.</string>
+    <string name="about_screen_icons_view_material">Ikon Material</string>
+    <string name="log_export_backup">Simpan cadangan</string>
+    <string name="log_import_backup">Muat cadangan</string>
+    <string name="log_import_select_file">Pilih file</string>
+    <string name="download_filemanager">Silahkan unduh pengelola file</string>
+    <string name="log_import_warning">Cadangan akan DITAMBAHKAN ke log terkini. Pertimbangkan membuat cadangan log saat ini. Jika Anda tidak ingin log saat ini, hapus sebelum memuat cadangan.</string>
+    <string name="log_import_loading_info">Memuat info&#8230;</string>
+    <string name="log_import_failed">Gagal memuat</string>
+    <string name="log_import_file_empty">File kosong</string>
+    <string name="log_import_backup_loading">Memuat cadangan&#8230;</string>
+    <string name="log_import_backup_import_button">Impor</string>
+    <string name="log_import_backup_finished">Impor selesai</string>
 </resources>
