@@ -4,6 +4,10 @@ Simple Android application that shows hardware temperatures from /sys/class/ther
 
 Supported languages: English, Indonesian and Czech ([see below](#status-of-translations))
 
+[<img src="https://f-droid.org/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/com.gmail.jiwopene.temperature/)
+
 ## Features
 - Reading temperatures from /sys/class/thermal directory (it can use it even if you don't have permission to read contents of directory)
 - Reading temperatures using Android API – BatteryManager class
