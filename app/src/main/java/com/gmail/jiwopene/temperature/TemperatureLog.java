@@ -400,6 +400,11 @@ public class TemperatureLog {
                 append(new Date(Long.parseLong(fields[0])), Uri.parse(sensors.get(Long.parseLong(fields[1]))), Double.parseDouble(fields[2]));
             }
         }
+
+        if (database.inTransaction()) {
+            database.setTransactionSuccessful();
+            database.endTransaction();
+        }
     }
 
     public interface LoadFromBackupStatusChangeListener {
