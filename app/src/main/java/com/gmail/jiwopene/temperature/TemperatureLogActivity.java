@@ -417,7 +417,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
                         }
                     }
                     for (int i = 0; i < 2; i++)
-                        while (true) {
+                        while (!isCancelled()) {
                             statusCounter++;
                             byteBuffer = backup.read();
                             if (byteBuffer <= 0)
@@ -430,7 +430,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
                             }
                         }
 
-                    while (true) {
+                    while (!isCancelled()) {
                         statusCounter++;
                         byteBuffer = backup.read();
                         if (byteBuffer < 0)
