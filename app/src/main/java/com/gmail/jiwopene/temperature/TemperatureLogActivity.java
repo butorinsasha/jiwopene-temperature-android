@@ -971,9 +971,27 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
             fillStyle.setAntiAlias(true);
             fillStyle.setStyle(Paint.Style.FILL);
 
-            PointF point_top = new PointF((float)(((currentTemp + nextTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP, 0);
-            PointF point_middle = new PointF((float)(((currentTemp)) * (float)canvas.getWidth()) / MAXIMAL_TEMP, canvas.getHeight() / 2);
-            PointF point_bottom = new PointF((float)(((currentTemp + previousTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP, canvas.getHeight());
+            PointF point_middle = new PointF(
+                    (float)(((currentTemp)) * (float)canvas.getWidth()) / MAXIMAL_TEMP,
+                    canvas.getHeight() / 2
+            );
+
+            PolarPointF point_top_pol_rel = PolarPointF.fromPointF(new PointF(
+                    (float)(((currentTemp + nextTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP - point_middle.x,
+                    0 - point_middle.y
+            ));
+            point_top_pol_rel.r *= 2;
+            PointF point_top = point_top_pol_rel.toPointF();
+            point_top.offset(point_middle.x, point_middle.y);
+
+            PolarPointF point_bottom_pol_rel = PolarPointF.fromPointF(new PointF(
+                    (float)(((currentTemp + previousTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP - point_middle.x,
+                    canvas.getHeight() - point_middle.y
+            ));
+            point_bottom_pol_rel.r *= 2;
+            PointF point_bottom = point_bottom_pol_rel.toPointF();
+            point_bottom.offset(point_middle.x, point_middle.y);
+
 
             Path fillPath = new Path();
             fillPath.moveTo(0,0);
