@@ -595,8 +595,20 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
             Toast.makeText(this, R.string.cannot_find_in_empty_list, Toast.LENGTH_SHORT).show();
         }
 
-        datePickerDialog.getDatePicker().setMaxDate(((TemperatureLog.Record)recordList.getAdapter().getItem(0)).getDate().getTime());
-        datePickerDialog.getDatePicker().setMinDate(((TemperatureLog.Record)recordList.getAdapter().getItem(recordList.getAdapter().getCount() - 1)).getDate().getTime());
+        Date selectedDate = new Date();
+        Date maxDate = ((TemperatureLog.Record)recordList.getAdapter().getItem(0)).getDate();
+        Date minDate = ((TemperatureLog.Record)recordList.getAdapter().getItem(recordList.getAdapter().getCount() - 1)).getDate();
+
+        if (selectedDate.before(minDate))
+            selectedDate = minDate;
+        if (selectedDate.after(maxDate))
+            selectedDate = maxDate;
+
+        Calendar selectedDateCalendar = new GregorianCalendar();
+        selectedDateCalendar.setTime(selectedDate);
+        datePickerDialog.updateDate(selectedDateCalendar.get(Calendar.YEAR), selectedDateCalendar.get(Calendar.MONTH), selectedDateCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMaxDate(maxDate.getTime() % 86400 + 86400);
+        datePickerDialog.getDatePicker().setMinDate(minDate.getTime() % 86400);
 
         Dialog.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override
