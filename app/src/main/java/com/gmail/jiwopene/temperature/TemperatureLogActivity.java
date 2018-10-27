@@ -37,6 +37,7 @@ import android.graphics.Canvas;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -970,13 +971,17 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
             fillStyle.setAntiAlias(true);
             fillStyle.setStyle(Paint.Style.FILL);
 
+            PointF point_top = new PointF((float)(((currentTemp + nextTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP, 0);
+            PointF point_middle = new PointF((float)(((currentTemp)) * (float)canvas.getWidth()) / MAXIMAL_TEMP, canvas.getHeight() / 2);
+            PointF point_bottom = new PointF((float)(((currentTemp + previousTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP, canvas.getHeight());
+
             Path fillPath = new Path();
             fillPath.moveTo(0,0);
             fillPath.lineTo(0, canvas.getHeight());
             // Starting from bottom
-            fillPath.lineTo((float)(((currentTemp + previousTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP, canvas.getHeight());
-            fillPath.lineTo((float)(((currentTemp)) * (float)canvas.getWidth()) / MAXIMAL_TEMP, canvas.getHeight() / 2);
-            fillPath.lineTo((float)(((currentTemp + nextTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP, 0);
+            fillPath.lineTo(point_bottom.x, point_bottom.y);
+            fillPath.lineTo(point_middle.x, point_middle.y);
+            fillPath.lineTo(point_top.x, point_top.y);
 
 
             Paint lineStyle = new Paint();
@@ -991,19 +996,19 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
             double averageTemp = (currentTemp + previousTemp) / 2;
 
             if (gapBefore && gapAfter) {
-                linePath.moveTo((float)currentTemp * (float)canvas.getWidth() / MAXIMAL_TEMP, (canvas.getHeight() * 1) / 3);
-                linePath.lineTo((float)currentTemp * (float)canvas.getWidth() / MAXIMAL_TEMP, (canvas.getHeight() * 2) / 3);
+                linePath.moveTo(point_middle.x, (canvas.getHeight() * 1) / 3);
+                linePath.lineTo(point_middle.x, (canvas.getHeight() * 2) / 3);
             }
             else {
-                linePath.moveTo((float)(((currentTemp + previousTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP, canvas.getHeight());
+                linePath.moveTo(point_bottom.x, point_bottom.y);
                 if (gapBefore)
-                    linePath.moveTo((float)(((currentTemp)) * (float)canvas.getWidth()) / MAXIMAL_TEMP, canvas.getHeight() / 2);
+                    linePath.moveTo(point_middle.x, point_middle.y);
                 else
-                    linePath.lineTo((float)(((currentTemp)) * (float)canvas.getWidth()) / MAXIMAL_TEMP, canvas.getHeight() / 2);
+                    linePath.lineTo(point_middle.x, point_middle.y);
                 if (gapAfter)
-                    linePath.moveTo((float)(((currentTemp + nextTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP, 0);
+                    linePath.moveTo(point_top.x, point_top.y);
                 else
-                    linePath.lineTo((float)(((currentTemp + nextTemp) / 2f) * (float)canvas.getWidth()) / MAXIMAL_TEMP, 0);
+                    linePath.lineTo(point_top.x, point_top.y);
             }
 
             canvas.drawPath(fillPath, fillStyle);
