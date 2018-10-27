@@ -477,7 +477,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
         }
     }
 
-    private class LoadBackupAsyncTask extends AsyncTask<Uri, Double, Boolean> implements TemperatureLog.LoadFromBackupStatusChangeListener {
+    private class LoadBackupAsyncTask extends AsyncTask<Uri, Double, Boolean> implements TemperatureLog.LoadFromBackupStatusChangeListener, DialogInterface.OnDismissListener {
 
         private AlertDialog dialog;
 
@@ -488,6 +488,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
             dialog = new AlertDialog.Builder(TemperatureLogActivity.this)
                     .setTitle(R.string.log_import_backup)
                     .create();
+            dialog.setOnDismissListener(this);
             dialog.setView(dialog.getLayoutInflater().inflate(R.layout.dialog_load_backup_progress, null));
             dialog.show();
         }
@@ -523,6 +524,11 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
             super.onProgressUpdate(values);
 
             ((ProgressBar)dialog.findViewById(R.id.progressbar)).setProgress((int)(values[0] * 1000));
+        }
+
+        @Override
+        public void onDismiss(DialogInterface dialog) {
+            cancel(true);
         }
     }
 
