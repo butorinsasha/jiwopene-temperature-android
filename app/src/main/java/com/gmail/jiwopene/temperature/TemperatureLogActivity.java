@@ -983,6 +983,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
             lineStyle.setColor(getContext().getResources().getColor(R.color.colorPrimary));
             lineStyle.setStyle(Paint.Style.STROKE);
             lineStyle.setStrokeCap(Paint.Cap.ROUND);
+            lineStyle.setStrokeJoin(Paint.Join.ROUND);
             lineStyle.setAntiAlias(true);
             lineStyle.setStrokeWidth(getResources().getDimensionPixelSize(R.dimen.chart_line_width));
 
