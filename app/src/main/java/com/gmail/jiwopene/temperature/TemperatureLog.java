@@ -317,10 +317,28 @@ public class TemperatureLog {
 
         Hashtable<Long, String> sensors = new Hashtable<>(1);
 
-        lineLoop: for (;; lineBuffer.delete(0, lineBuffer.length())) {
+        int statusCounter = 0;
+        final int SHOW_STATUS_EVERY_BYTES = 32768; // To make processing faster report only after some number of bytes
+
+        lineLoop: for (;; statusCounter++, lineBuffer.delete(0, lineBuffer.length())) {
+            // Show status every  ↓  items
+            if (statusCounter > SHOW_STATUS_EVERY_BYTES) {
+                if (statusChangeListener != null && size != 0)
+                    statusChangeListener.statusChanged(1.0d - (double)(backup.available()) / (double)size);
+                statusCounter = 0;
+
+                if (database.inTransaction()) {
+                    database.setTransactionSuccessful();
+                    database.endTransaction();
+                }
+            }
+
+            if (!database.inTransaction())
+                database.beginTransactionNonExclusive();
+
             byteBuffer = reader.read();
-            if (statusChangeListener != null && size != 0)
-                statusChangeListener.statusChanged(1.0d - (double)(backup.available()) / (double)size);
+            statusCounter++;
+
             if (byteBuffer == -1)
                 break;
             lineBuffer.append((char)byteBuffer);
@@ -328,6 +346,7 @@ public class TemperatureLog {
             if (byteBuffer == (int)'S') { // Is sensor definition
                 for (byteBuffer = 0; byteBuffer >= 0 && byteBuffer != ' ';) {
                     byteBuffer = reader.read();
+                    statusCounter++;
                     if (statusChangeListener != null && size != 0)
                         statusChangeListener.statusChanged(1.0d - (double)(backup.available()) / (double)size);
                     if (byteBuffer == -1)
@@ -335,12 +354,15 @@ public class TemperatureLog {
                 }
 
                 long id = 0;
-                for (byteBuffer = '0'; byteBuffer >= '0' && byteBuffer <= '9'; byteBuffer = reader.read())
+                for (byteBuffer = '0'; byteBuffer >= '0' && byteBuffer <= '9'; byteBuffer = reader.read()) {
                     id = id * 10 + byteBuffer - '0';
+                    statusCounter++;
+                }
 
                 lineBuffer.deleteCharAt(0);
                 while (true) {
                     byteBuffer = reader.read();
+                    statusCounter++;
                     if (statusChangeListener != null && size != 0)
                         statusChangeListener.statusChanged(1.0d - (double)(backup.available()) / (double)size);
                     if (byteBuffer < 0)
@@ -356,6 +378,7 @@ public class TemperatureLog {
                 lineBuffer.delete(0, lineBuffer.length());
                 while (true) {
                     byteBuffer = reader.read();
+                    statusCounter++;
                     if (statusChangeListener != null && size != 0)
                         statusChangeListener.statusChanged(1.0d - (double)(backup.available()) / (double)size);
                     if (byteBuffer < 0)
