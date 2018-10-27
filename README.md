@@ -2,7 +2,7 @@
 
 Simple Android application that shows hardware temperatures from /sys/class/thermal and BatteryManager.
 
-Supported languages: English, Indonesian and Czech ([see below](#status-of-translations))
+Supported languages: English, Indonesian and Czech ([see below](#contribute))
 
 [<img src="https://f-droid.org/badge/get-it-on.png"
      alt="Get it on F-Droid"
