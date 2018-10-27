@@ -395,27 +395,38 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
                 output.append("\n");
 
                 // Look for sensors
+                int statusCounter = 0;
+                final int SHOW_STATUS_EVERY_BYTES = 65536; // To make processing faster report only after some number of bytes
                 lookForSensors: while (true) {
                     int byteBuffer;
                     while (true) {
+                        statusCounter++;
                         byteBuffer = backup.read();
                         if (byteBuffer <= 0)
                             break lookForSensors;
                         if (byteBuffer == 'S')
                             break;
-                        reportPosition(backup.available(), size-backup.available());
+                        if (statusCounter > SHOW_STATUS_EVERY_BYTES) {
+                            reportPosition(backup.available(), size - backup.available());
+                            statusCounter = 0;
+                        }
                     }
                     for (int i = 0; i < 2; i++)
                         while (true) {
+                            statusCounter++;
                             byteBuffer = backup.read();
                             if (byteBuffer <= 0)
                                 break lookForSensors;
                             if (byteBuffer == ' ')
                                 break;
-                            reportPosition(backup.available(), size-backup.available());
+                            if (statusCounter > SHOW_STATUS_EVERY_BYTES) {
+                                reportPosition(backup.available(), size - backup.available());
+                                statusCounter = 0;
+                            }
                         }
 
                     while (true) {
+                        statusCounter++;
                         byteBuffer = backup.read();
                         if (byteBuffer < 0)
                             break lookForSensors;
@@ -423,7 +434,10 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
                             break;
                         output.append((char)byteBuffer);
                         empty = false;
-                        reportPosition(backup.available(), size-backup.available());
+                        if (statusCounter > SHOW_STATUS_EVERY_BYTES) {
+                            reportPosition(backup.available(), size - backup.available());
+                            statusCounter = 0;
+                        }
                     }
                     output.append("\n");
                 }
