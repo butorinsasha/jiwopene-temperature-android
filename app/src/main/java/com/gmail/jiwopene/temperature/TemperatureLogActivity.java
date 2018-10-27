@@ -324,17 +324,23 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
                     break;
                 }
                 try {
-                    // Show confirm dialog
                     final AlertDialog dialog = new AlertDialog.Builder(this)
-                        .setTitle(R.string.log_import_backup)
-                        .create();
+                            .setTitle(R.string.log_import_backup)
+                            .create();
+                    final LoadBackupInfoAsyncTask task = new LoadBackupInfoAsyncTask(dialog);
+
+                    // Show confirm dialog
                     dialog.setView(dialog.getLayoutInflater().inflate(R.layout.dialog_load_backup, null));
                     final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which) {
                                 case DialogInterface.BUTTON_POSITIVE:
+                                    task.cancel(true);
                                     loadBackup(data.getData());
+                                    break;
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    task.cancel(true);
                                     break;
                             }
                         }
@@ -343,7 +349,6 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
                     dialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.log_import_backup_import_button), listener);
                     dialog.show();
 
-                    LoadBackupInfoAsyncTask task = new LoadBackupInfoAsyncTask(dialog);
                     task.execute(data.getData());
                 }
                 catch (Exception e) {
@@ -379,7 +384,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
 
                 // Get description
                 ArrayList<Byte> description_bytes_list = new ArrayList<>();
-                while (true) {
+                while (!isCancelled()) {
                     int b = backup.read();
                     if (b <= 0)
                         break;
@@ -388,7 +393,7 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
                     reportPosition(backup.available(), size-backup.available());
                 }
                 byte[] description_bytes = new byte[description_bytes_list.size()];
-                for (int i = 0; i < description_bytes.length; i++)
+                for (int i = 0; i < description_bytes.length && !isCancelled(); i++)
                     description_bytes[i] = description_bytes_list.get(i);
 
                 output.append(new String(description_bytes));
@@ -397,9 +402,9 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
                 // Look for sensors
                 int statusCounter = 0;
                 final int SHOW_STATUS_EVERY_BYTES = 65536; // To make processing faster report only after some number of bytes
-                lookForSensors: while (true) {
+                lookForSensors: while (!isCancelled()) {
                     int byteBuffer;
-                    while (true) {
+                    while (!isCancelled()) {
                         statusCounter++;
                         byteBuffer = backup.read();
                         if (byteBuffer <= 0)
