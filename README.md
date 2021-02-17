@@ -53,6 +53,6 @@ You can translate the app to other languages. Just download one of strings.xml f
  <tr>
   <td>Indonesian</td>
   <td>Good</td>
-  <td>Yes</td>
+  <td>No (4 strings remaining)</td>
  </tr>
 </table>
