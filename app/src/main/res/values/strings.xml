@@ -105,4 +105,9 @@
     <string name="log_import_backup_finished">Import finished</string>
 
     <string name="deleted">Deleted</string>
+
+    <string name="offset">Offset</string>
+    <string name="multiplier">Multiplier</string>
+
+    <string name="adjustment_info">You can use the value adjustment fields above to fix sensor range. Sensors on some devices report incorrect values. Some sensors can have their value divided by 10, 100, or 1000 or their values can be offset by 273,15 °C.</string>
 </resources>

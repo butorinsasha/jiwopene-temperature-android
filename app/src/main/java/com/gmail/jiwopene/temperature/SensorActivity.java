@@ -29,13 +29,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.gmail.jiwopene.temperature.sensors.Sensor;
+import com.gmail.jiwopene.temperature.sensors.SensorAdjustment;
 import com.gmail.jiwopene.temperature.sensors.SensorStorage;
 
 import java.util.Locale;
@@ -49,6 +51,8 @@ public class SensorActivity extends AppCompatActivity {
     private TextView tv_name;
     private TextView tv_description;
     private TextView tv_temperature;
+    private EditText et_offset;
+    private EditText et_multiplier;
     private IntervalSubmenu intervalSubmenu;
 
     @Override
@@ -76,8 +80,36 @@ public class SensorActivity extends AppCompatActivity {
             this.tv_name = findViewById(R.id.name);
             this.tv_description = findViewById(R.id.description);
             this.tv_temperature = findViewById(R.id.temperature);
-        }
-        else {
+            this.et_offset = findViewById(R.id.offset);
+            this.et_multiplier = findViewById(R.id.multiplier);
+
+            TextWatcher onAdjustmentFieldEdit = new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    try {
+                        float newOffset = Float.parseFloat(String.valueOf(et_offset.getText()));
+                        float newMultiplier = Float.parseFloat(String.valueOf(et_multiplier.getText()));
+
+                        storage.setSensorAdjustment(sensor.getIdentifier(), new SensorAdjustment(newOffset, newMultiplier));
+
+                        update();
+                    } catch (NumberFormatException e) {
+                        // Do nothing
+                    }
+                }
+            };
+
+            et_offset.addTextChangedListener(onAdjustmentFieldEdit);
+            et_multiplier.addTextChangedListener(onAdjustmentFieldEdit);
+        } else {
             TextView message = new TextView(this);
             message.setText(R.string.sensor_not_found);
             setContentView(message);
@@ -104,6 +136,10 @@ public class SensorActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         updateTimerHandler.postDelayed(updateTimer, 0);
+
+        SensorAdjustment adjustment = storage.getSensorAdjustment(sensor.getIdentifier());
+        et_offset.setText(String.valueOf(adjustment.getOffset()));
+        et_multiplier.setText(String.valueOf(adjustment.getMultiplier()));
     }
 
     private void update() {
@@ -124,9 +160,9 @@ public class SensorActivity extends AppCompatActivity {
         }
 
         try {
-            tv_temperature.setText(String.format(Locale.getDefault(), "%.2f °C", sensor.getValue()));
-        }
-        catch (Exception e) {
+            SensorAdjustment adjustment = storage.getSensorAdjustment(sensor.getIdentifier());
+            tv_temperature.setText(String.format(Locale.getDefault(), "%.2f °C", adjustment.applyTo(sensor.getValue())));
+        } catch (Exception e) {
             tv_temperature.setText(R.string.no_temperature);
         }
     }

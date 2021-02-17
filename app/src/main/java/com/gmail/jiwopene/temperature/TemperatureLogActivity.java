@@ -45,6 +45,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.gmail.jiwopene.temperature.sensors.Sensor;
+import com.gmail.jiwopene.temperature.sensors.SensorAdjustment;
 import com.gmail.jiwopene.temperature.sensors.SensorStorage;
 
 import java.io.*;
@@ -880,6 +881,8 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
             }
             ((TemperatureLogRecordView) view).setCurrentTemp(((TemperatureLog.Record) getItem(i)).getTemp());
 
+            ((TemperatureLogRecordView) view).setAdjustment(storage.getSensorAdjustment(((TemperatureLog.Record) getItem(i)).identifier));
+
             ((TemperatureLogRecordView) view).setDate(((TemperatureLog.Record) getItem(i)).getDate());
 
             ((TemperatureLogRecordView) view).setGapBefore(false);
@@ -927,6 +930,8 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
         private final View internalView;
         private double previousTemp;
         private double currentTemp;
+
+        private SensorAdjustment adjustment;
         private double nextTemp;
         private Date date;
         private boolean gapBefore = false;
@@ -1039,6 +1044,10 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
             invalidate();
         }
 
+        public void setAdjustment(SensorAdjustment adjustment) {
+            this.adjustment = adjustment;
+        }
+
         public void setDate(Date date) {
             this.date = date;
             updateText();
@@ -1060,7 +1069,12 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
             else date = DateFormat.getInstance().format(this.date);
 
             ((TextView)internalView.findViewById(R.id.date)).setText(date);
-            ((TextView)internalView.findViewById(R.id.temperature)).setText(String.format(Locale.getDefault(), "%.2f °C", this.currentTemp));
+
+            if (adjustment == null) {
+                ((TextView) internalView.findViewById(R.id.temperature)).setText("?? °C");
+            } else {
+                ((TextView) internalView.findViewById(R.id.temperature)).setText(String.format(Locale.getDefault(), "%.2f °C", adjustment.applyTo(this.currentTemp)));
+            }
         }
     }
 }

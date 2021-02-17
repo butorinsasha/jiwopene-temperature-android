@@ -39,6 +39,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gmail.jiwopene.temperature.sensors.Sensor;
+import com.gmail.jiwopene.temperature.sensors.SensorAdjustment;
 import com.gmail.jiwopene.temperature.sensors.SensorStorage;
 
 import java.util.ArrayList;
@@ -285,7 +286,7 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
             else
                 ((TextView)(view.findViewById(R.id.description))).setText(R.string.no_description);
             if (sensors[i].value != null)
-                ((TextView) (view.findViewById(R.id.temperature))).setText(String.format(Locale.getDefault(), "%.2f °C", sensors[i].value));
+                ((TextView) (view.findViewById(R.id.temperature))).setText(String.format(Locale.getDefault(), "%.2f °C", sensors[i].adjustment.applyTo(sensors[i].value)));
             else
                 ((TextView)(view.findViewById(R.id.temperature))).setText(R.string.no_temperature);
             if (sensors[i].hidden) {
@@ -322,6 +323,7 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
             Boolean hidden;
             Sensor original;
             SensorStorage storage;
+            SensorAdjustment adjustment;
 
             void refresh() {
                 try {
@@ -337,6 +339,7 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
                 catch (Exception ignored) {
                     value = null;
                 }
+                adjustment = storage.getSensorAdjustment(original.getIdentifier());
                 hidden = storage.isSensorHidden(original.getIdentifier());
             }
         }

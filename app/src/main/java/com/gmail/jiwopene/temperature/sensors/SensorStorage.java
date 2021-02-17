@@ -90,6 +90,19 @@ public final class SensorStorage {
         editor.apply();
     }
 
+    public SensorAdjustment getSensorAdjustment(@NonNull Uri uri) {
+        return new SensorAdjustment(
+                prefs.getFloat("adj-o-" + uri.toString(), 0), prefs.getFloat("adj-m-" + uri.toString(), 1)
+        );
+    }
+
+    public void setSensorAdjustment(@NonNull Uri uri, @NonNull SensorAdjustment adjustment) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putFloat("adj-o-" + uri.toString(), adjustment.getOffset());
+        editor.putFloat("adj-m-" + uri.toString(), adjustment.getMultiplier());
+        editor.apply();
+    }
+
     public void removeSensor(@NonNull Uri uri) {
         ArrayList<String> sensors = new ArrayList<>(prefs.getStringSet("sensors", new ArraySet<String>()));
         for (int i = 0; i < sensors.size();)
