@@ -99,4 +99,12 @@
     <string name="log_import_backup_loading">Načítání zálohy&#8230;</string>
     <string name="log_import_failed">Načítání selhalo</string>
     <string name="log_import_file_empty">Soubor je prázdný</string>
+
+    <string name="deleted">Smazáno</string>
+
+    <string name="offset">Přičíst</string>
+    <string name="multiplier">Násobit</string>
+
+    <string name="adjustment_info">Pole pro úpravu hodnot ze senzoru výše můžete použít pro korekci rozahu senzoru. Senzory na některých zařízeních ukazují nesprávné hodnoty, a to typicky tak, že musíte hodnotu vynásobit deseti, stem nebo tisícem, anebo přičíst 273,15 °C.</string>
+
 </resources>
