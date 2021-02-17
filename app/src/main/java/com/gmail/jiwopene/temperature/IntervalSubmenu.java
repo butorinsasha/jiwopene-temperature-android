@@ -50,7 +50,7 @@ abstract class IntervalSubmenu {
 
     public void addToMenu(Menu menu, MenuInflater inflater) {
         SubMenu submenu = menu.addSubMenu(R.string.update_interval);
-        submenu.getItem().setIcon(R.drawable.baseline_av_timer_white_24);
+        submenu.getItem().setIcon(R.drawable.baseline_timer_white_24);
         submenu.getItem().setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         inflater.inflate(R.menu.interval, submenu);
     }
