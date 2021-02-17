@@ -103,4 +103,6 @@
     <string name="log_import_backup_loading">Loading backup&#8230;</string>
     <string name="log_import_backup_import_button">Import</string>
     <string name="log_import_backup_finished">Import finished</string>
+
+    <string name="deleted">Deleted</string>
 </resources>

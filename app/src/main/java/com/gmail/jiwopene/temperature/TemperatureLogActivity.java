@@ -508,6 +508,12 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
         final TextView countdown = new TextView(TemperatureLogActivity.this);
         countdown.setText(String.format(Locale.getDefault(), getString(R.string.log_delete_really_countdown), 5));
         countdownDialog.setView(countdown);
+        countdownDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
         int padding = (int)(getResources().getDisplayMetrics().density * 16);
         countdown.setPadding(padding, padding, padding, padding);
         final CountDownTimer countDownTimer = new CountDownTimer(5000, 1000) {
@@ -519,13 +525,14 @@ public class TemperatureLogActivity extends AppCompatActivity implements Adapter
             @Override
             public void onFinish() {
                 new TemperatureLog(TemperatureLogActivity.this).deleteLog(sensor);
-                countdownDialog.cancel();
+                countdownDialog.dismiss();
+                Toast.makeText(TemperatureLogActivity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
                 refreshList();
             }
         };
-        countdownDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+        countdownDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
-            public void onDismiss(DialogInterface dialog) {
+            public void onCancel(DialogInterface dialog) {
                 countDownTimer.cancel();
                 Toast.makeText(TemperatureLogActivity.this, R.string.canceled, Toast.LENGTH_SHORT).show();
             }
