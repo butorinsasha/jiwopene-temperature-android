@@ -104,21 +104,26 @@ public class TemperatureLogService extends Service {
             type = AlarmManager.ELAPSED_REALTIME;
         }
 
-        if (globalPreferences.getLogEnabledInLowPowerState() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (globalPreferences.getExactLogTimingEnabled() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setExactAndAllowWhileIdle(type, nextTime, alarmIntent);
-            }
-            else {
-                alarmManager.setAndAllowWhileIdle(type, nextTime, alarmIntent);
+        if (globalPreferences.getLogEnabled()) {
+            Log.d(TemperatureLogService.class.getName(), "Logging is still enabled -- scheduling next event");
+
+            if (globalPreferences.getLogEnabledInLowPowerState() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (globalPreferences.getExactLogTimingEnabled() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    alarmManager.setExactAndAllowWhileIdle(type, nextTime, alarmIntent);
+                } else {
+                    alarmManager.setAndAllowWhileIdle(type, nextTime, alarmIntent);
+                }
+            } else {
+                if (globalPreferences.getExactLogTimingEnabled() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    alarmManager.setExact(type, nextTime, alarmIntent);
+                } else {
+                    alarmManager.set(type, nextTime, alarmIntent);
+                }
             }
         }
         else {
-            if (globalPreferences.getExactLogTimingEnabled() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setExact(type, nextTime, alarmIntent);
-            }
-            else {
-                alarmManager.set(type, nextTime, alarmIntent);
-            }
+            Log.d(TemperatureLogService.class.getName(),
+                    "Logging is not enabled -- next event will NOT be scheduled");
         }
     }
 }
