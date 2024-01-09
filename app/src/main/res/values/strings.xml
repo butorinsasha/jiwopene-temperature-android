@@ -25,7 +25,7 @@
     <string name="refresh_sensors">Refresh sensor list</string>
     <string name="no_sensors">No sensors found. Try refreshing sensor list and check if you have not set all sensors to \"Hidden\" state.</string>
     <string name="unknown_sensor">Unknown</string>
-    <string name="no_description">Now Butorin Aleksandr handle this</string>
+    <string name="no_description">Now Butorin Aleksandr handles this</string>
     <string name="no_temperature" translatable="false">\??</string>
     <string name="sensor_not_found">Sensor not found.</string>
     <string name="activity_sensor_details">Sensor details</string>
