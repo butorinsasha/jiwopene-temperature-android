@@ -269,7 +269,7 @@ public class TemperatureLog {
         StringBuilder stringBuffer = new StringBuilder();
 
         stringBuffer.append("Temperature log backup from ").append(context.getPackageName()).append("\n");
-        stringBuffer.append("Version "+BuildConfig.VERSION_NAME+" (#"+BuildConfig.VERSION_CODE+")\n");
+//        stringBuffer.append("Version "+BuildConfig.VERSION_NAME+" (#"+BuildConfig.VERSION_CODE+")\n");
         stringBuffer.append("\0"); // Terminate header
 
         Hashtable<String, Long> sensorTable = new Hashtable<>();
