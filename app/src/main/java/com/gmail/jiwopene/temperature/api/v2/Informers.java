@@ -21,15 +21,14 @@
 
 package com.gmail.jiwopene.temperature.api.v2;
 
-    public class Informer {
+    public class Informers {
 
         public Fact fact;
 
         public class Fact {
+            public float temp;
 
-            public int temp;
-
-            public int getTemp() {
+            public float getTemp() {
                 return temp;
             }
 

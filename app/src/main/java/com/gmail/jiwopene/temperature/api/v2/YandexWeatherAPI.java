@@ -28,11 +28,13 @@ import retrofit2.http.Query;
 
 public interface YandexWeatherAPI {
 
+    String BASE_URL = "https://api.weather.yandex.ru/v2/";
+    String X_YANDEX_API_KEY = "22494cd9-231c-488e-a636-028fa5cda9d2";
+
     @GET("informers/")
-    Call<Informer> getWeather(
+    Call<Informers> getInformers(
             @Header("X-Yandex-API-Key") String apiKey,
             @Query("lat") float lat,
             @Query("lon") float lon
     );
-
 }

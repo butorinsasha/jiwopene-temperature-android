@@ -21,6 +21,9 @@
 
 package com.gmail.jiwopene.temperature;
 
+import static com.gmail.jiwopene.temperature.api.v2.YandexWeatherAPI.BASE_URL;
+import static com.gmail.jiwopene.temperature.api.v2.YandexWeatherAPI.X_YANDEX_API_KEY;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,6 +32,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,13 +42,22 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.gmail.jiwopene.temperature.api.v2.Controller;
+import com.gmail.jiwopene.temperature.api.v2.Informers;
+import com.gmail.jiwopene.temperature.api.v2.YandexWeatherAPI;
 import com.gmail.jiwopene.temperature.sensors.Sensor;
 import com.gmail.jiwopene.temperature.sensors.SensorAdjustment;
 import com.gmail.jiwopene.temperature.sensors.SensorStorage;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TemperaturesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -53,6 +66,49 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
 
     private ListView sensorList;
     private IntervalSubmenu intervalSubmenu;
+
+    public static Call<Informers> getYandexInformerCall() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+
+        YandexWeatherAPI yandexWeatherAPI = retrofit.create(YandexWeatherAPI.class);
+
+        Call<Informers> call = yandexWeatherAPI.getInformers(X_YANDEX_API_KEY, 59.938675f, 30.314447f); // Pushkin, blvr. Aleksei Tolstoy 11
+
+        return call;
+    }
+
+    public void updateYandexTemp() {
+        Call<Informers> call = getYandexInformerCall();
+        call.enqueue(new Callback<Informers>() {
+            @Override
+            public void onResponse(Call<Informers> call, Response<Informers> response) {
+                if (response.isSuccessful()) {
+                    float temp = 0;
+                    if (response.body() != null) {
+                        temp = response.body().fact.temp;
+                    }
+                    TextView yandexTemepratureValueTextView = findViewById(R.id.yandex_temperature_value);
+                    yandexTemepratureValueTextView.setText(String.format(Locale.getDefault(), "%.2f °C", temp));
+                } else {
+                    Log.i(this.getClass().getName(), String.valueOf(response.errorBody()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Informers> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,16 +123,11 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
             sensorStorage.rescan();
 
         sensorList = findViewById(R.id.sensor_list);
-
         sensorList.setOnItemClickListener(this);
-
         rebuildSensorList();
-
         globalPreferences.setFirstRun(false);
 
-        // Retrofit usage training
-        Controller controller = new Controller();
-        controller.start();
+        updateYandexTemp();
     }
 
     @Override
