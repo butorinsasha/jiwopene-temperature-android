@@ -1,6 +1,6 @@
 /*
  * temperature-android
- * Copyright (C) 2018  jiwopene
+ * Copyright (C) 2024  jiwopene
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,34 +19,20 @@
  * https://gitlab.com/jiwopene/temperature-android
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.gmail.jiwopene.temperature.api.v2;
 
-buildscript {
-    
-    repositories {
-        jcenter()
-        google()
-//        mavenCentral()
-//        maven { url 'https://jitpack.io' }
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.1'
-        
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Query;
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
+public interface YandexWeatherAPI {
 
-allprojects {
-    repositories {
-        jcenter()
-        google()
-//        mavenCentral()
-//        maven { url 'https://jitpack.io' }
-    }
-}
+    @GET("informers/")
+    Call<Informer> getWeather(
+            @Header("X-Yandex-API-Key") String apiKey,
+            @Query("lat") float lat,
+            @Query("lon") float lon
+    );
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }

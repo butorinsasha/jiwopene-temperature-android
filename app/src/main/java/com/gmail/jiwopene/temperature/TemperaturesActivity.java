@@ -38,6 +38,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.gmail.jiwopene.temperature.api.v2.Controller;
 import com.gmail.jiwopene.temperature.sensors.Sensor;
 import com.gmail.jiwopene.temperature.sensors.SensorAdjustment;
 import com.gmail.jiwopene.temperature.sensors.SensorStorage;
@@ -72,6 +73,10 @@ public class TemperaturesActivity extends AppCompatActivity implements AdapterVi
         rebuildSensorList();
 
         globalPreferences.setFirstRun(false);
+
+        // Retrofit usage training
+        Controller controller = new Controller();
+        controller.start();
     }
 
     @Override

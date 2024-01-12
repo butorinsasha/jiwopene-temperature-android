@@ -1,6 +1,6 @@
 /*
  * temperature-android
- * Copyright (C) 2018  jiwopene
+ * Copyright (C) 2024  jiwopene
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,34 +19,22 @@
  * https://gitlab.com/jiwopene/temperature-android
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.gmail.jiwopene.temperature.api.v2;
 
-buildscript {
-    
-    repositories {
-        jcenter()
-        google()
-//        mavenCentral()
-//        maven { url 'https://jitpack.io' }
+    public class Informer {
+
+        public Fact fact;
+
+        public class Fact {
+
+            public int temp;
+
+            public int getTemp() {
+                return temp;
+            }
+
+            public void setTemp(int temp) {
+                this.temp = temp;
+            }
+        }
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.1'
-        
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-allprojects {
-    repositories {
-        jcenter()
-        google()
-//        mavenCentral()
-//        maven { url 'https://jitpack.io' }
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
